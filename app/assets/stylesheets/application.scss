@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+
+$primary: #8B0146;
+$secondary: #181552;
+$dark: #172026;
+
+@import 'bootstrap/scss/bootstrap';
