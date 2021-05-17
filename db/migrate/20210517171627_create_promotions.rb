@@ -1,6 +1,6 @@
 class CreatePromotions < ActiveRecord::Migration[6.1]
   def change
-    create_table :promotions, primary_key: [:annee] do |t|
+    create_table :promotions do |t|
       t.string :annee, limit: 4
     end
   end

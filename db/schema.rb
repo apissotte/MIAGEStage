@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_17_171627) do
+ActiveRecord::Schema.define(version: 2021_05_17_172810) do
 
-  create_table "promotions", primary_key: "annee", id: { type: :string, limit: 4 }, force: :cascade do |t|
+  create_table "formations", force: :cascade do |t|
+    t.string "mention"
+    t.string "libelle"
+    t.string "email"
+    t.string "code_ue"
+    t.integer "promotion_id"
+    t.index ["promotion_id"], name: "index_formations_on_promotion_id"
   end
 
+  create_table "promotions", force: :cascade do |t|
+    t.string "annee", limit: 4
+  end
+
+  add_foreign_key "formations", "promotions"
 end
