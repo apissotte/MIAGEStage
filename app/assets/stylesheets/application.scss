@@ -14,8 +14,153 @@
  *= require_self
  */
 
-$primary: #8B0146;
-$secondary: #181552;
-$dark: #172026;
+// MIAGE Stage default colors variables
+$lightgrey: #F9F9F9;
+$mediumgrey: #CCCCCC;
+$darkgrey: #172026;
+$purple: #8B0146;
+$purple-transparent: #8B0146BB;
+$mediumblue: #231d99;
+$darkblue: #181552;
 
-@import 'bootstrap/scss/bootstrap';
+// Bootstrap default variable overrides
+$primary: $purple;
+$secondary: $mediumblue;
+$dark: $darkgrey;
+
+// Import all Bootstrap dependencies
+// DO NOT CHANGE DIRECTOR EVEN IF IT IS RED-UNDERLINED
+@import "bootstrap/scss/bootstrap";
+
+// Custom graphic chart
+.bg-white {
+  background-color: white !important;
+}
+
+.bg-lightgrey {
+  background-color: $lightgrey !important;
+}
+
+.bg-mediumgrey {
+  background-color: $mediumgrey !important;
+}
+
+.bg-darkgrey {
+  background-color: $darkgrey !important;
+}
+
+.bg-purple {
+  background-color: $purple !important;
+}
+
+.bg-mediumblue {
+  background-color: $mediumblue !important;
+}
+
+.bg-darkblue {
+  background-color: $darkblue !important;
+}
+
+.text-white {
+  color: white !important;
+}
+
+.text-lightgrey {
+  color: $lightgrey !important;
+}
+
+.text-mediumgrey {
+  color: $mediumgrey !important;
+}
+
+.text-darkgrey {
+  color: $darkgrey !important;
+}
+
+.text-purple {
+  color: $purple !important;
+}
+
+.text-mediumblue {
+  color: $mediumblue !important;
+}
+
+.text-darkblue {
+  color: $darkblue !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.font-normal {
+  font-weight: normal !important;
+}
+
+.btn-round {
+  border-radius: 20px !important;
+  padding-right: 3rem !important;
+  padding-left: 3rem !important;
+  font-weight: bold !important;
+  color: #FFFFFF !important;
+  background-color: $purple !important;
+}
+
+.btn-round {
+  border-radius: 20px !important;
+  padding-right: 3rem !important;
+  padding-left: 3rem !important;
+  font-weight: bold !important;
+  color: #FFFFFF !important;
+  background-color: $purple !important;
+}
+
+.btn-round a, .btn-square a {
+  color: #FFFFFF !important;
+  text-decoration: none !important;
+}
+
+.btn-square {
+  border-radius: 20px !important;
+  padding: 1.5rem !important;
+  font-weight: bold !important;
+  color: #FFFFFF !important;
+  background-color: $purple !important;
+  width: 15rem;
+}
+
+input[type='radio']:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -4px;
+  left: -1px;
+  position: relative;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid darkgrey;
+  background-color: white;
+}
+
+input[type='radio']:checked:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -4px;
+  left: -1px;
+  position: relative;
+  background-color: darkgrey;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid darkgrey;
+}
