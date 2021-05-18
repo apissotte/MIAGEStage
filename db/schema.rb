@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_135307) do
+ActiveRecord::Schema.define(version: 2021_05_18_160203) do
 
   create_table "aides", force: :cascade do |t|
     t.boolean "cv_recu"
@@ -67,6 +67,17 @@ ActiveRecord::Schema.define(version: 2021_05_18_135307) do
     t.index ["formation_id"], name: "index_etudiants_formations_on_formation_id"
   end
 
+  create_table "evaluations", force: :cascade do |t|
+    t.text "contenu"
+    t.boolean "auto_evalution"
+    t.integer "stage_id"
+    t.integer "ge_format_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ge_format_id"], name: "index_evaluations_on_ge_format_id"
+    t.index ["stage_id"], name: "index_evaluations_on_stage_id"
+  end
+
   create_table "fiche_stages", force: :cascade do |t|
     t.string "titre"
     t.string "poste"
@@ -96,6 +107,12 @@ ActiveRecord::Schema.define(version: 2021_05_18_135307) do
     t.string "code_ue"
     t.integer "promotion_id"
     t.index ["promotion_id"], name: "index_formations_on_promotion_id"
+  end
+
+  create_table "ge_formats", force: :cascade do |t|
+    t.text "contenu"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "offres", force: :cascade do |t|
@@ -183,6 +200,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_135307) do
 
   add_foreign_key "aides", "etudiants"
   add_foreign_key "aides", "formations"
+  add_foreign_key "evaluations", "ge_formats"
+  add_foreign_key "evaluations", "stages"
   add_foreign_key "fiche_stages", "etudiants"
   add_foreign_key "fiche_stages", "offres"
   add_foreign_key "formations", "promotions"
