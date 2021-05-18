@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_133829) do
+ActiveRecord::Schema.define(version: 2021_05_18_135307) do
 
   create_table "aides", force: :cascade do |t|
     t.boolean "cv_recu"
@@ -109,6 +109,13 @@ ActiveRecord::Schema.define(version: 2021_05_18_133829) do
     t.index ["entreprise_id"], name: "index_offres_on_entreprise_id"
     t.check_constraint "mention IN (\"L3\",\"M1\", \"M2\")"
     t.check_constraint "type IN (\"STAGE\",\"ALTERNANCE\")"
+  end
+
+  create_table "offres_technologies", id: false, force: :cascade do |t|
+    t.integer "offre_id", null: false
+    t.integer "technology_id", null: false
+    t.index ["offre_id"], name: "index_offres_technologies_on_offre_id"
+    t.index ["technology_id"], name: "index_offres_technologies_on_technology_id"
   end
 
   create_table "promotions", force: :cascade do |t|
