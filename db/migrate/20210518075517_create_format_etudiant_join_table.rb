@@ -4,5 +4,6 @@ class CreateFormatEtudiantJoinTable < ActiveRecord::Migration[6.1]
       t.index :formation_id
       t.index :etudiant_id
     end
+
   end
 end

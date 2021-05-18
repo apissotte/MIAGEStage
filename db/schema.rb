@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_075517) do
+ActiveRecord::Schema.define(version: 2021_05_18_081951) do
+
+  create_table "aides", force: :cascade do |t|
+    t.boolean "cv_recu"
+    t.boolean "lettre_recu"
+    t.string "suivi"
+    t.boolean "present_reunion"
+    t.integer "etudiant_id"
+    t.integer "formation_id"
+    t.index ["etudiant_id", "formation_id"], name: "index_aides_on_etudiant_id_and_formation_id", unique: true
+    t.index ["etudiant_id"], name: "index_aides_on_etudiant_id"
+    t.index ["formation_id"], name: "index_aides_on_formation_id"
+  end
 
   create_table "etudiants", force: :cascade do |t|
     t.string "num_etudiant"
@@ -48,5 +60,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_075517) do
     t.index ["annee"], name: "index_promotions_on_annee", unique: true
   end
 
+  add_foreign_key "aides", "etudiants"
+  add_foreign_key "aides", "formations"
   add_foreign_key "formations", "promotions"
 end
