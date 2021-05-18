@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_135307) do
     t.string "mention"
     t.date "date_debut"
     t.date "date_fin"
+    t.binary "fiche_papier"
     t.string "contact_nom"
     t.string "contact_prenom"
     t.string "contact_poste"

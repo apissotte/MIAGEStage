@@ -9,6 +9,7 @@ class CreateFicheStages < ActiveRecord::Migration[6.1]
       t.string :mention
       t.date :date_debut
       t.date :date_fin
+      t.binary :fiche_papier
       t.string :contact_nom
       t.string :contact_prenom
       t.string :contact_poste
