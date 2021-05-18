@@ -7,8 +7,6 @@ class CreateVisites < ActiveRecord::Migration[6.1]
       t.string :commentaire
 
       t.belongs_to :stage, foreign_key: true
-
-      #todo: ajouter la grille
     end
   end
 end
