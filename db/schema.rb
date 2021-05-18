@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_081951) do
+ActiveRecord::Schema.define(version: 2021_05_18_090113) do
 
   create_table "aides", force: :cascade do |t|
     t.boolean "cv_recu"
@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(version: 2021_05_18_081951) do
     t.index ["etudiant_id", "formation_id"], name: "index_aides_on_etudiant_id_and_formation_id", unique: true
     t.index ["etudiant_id"], name: "index_aides_on_etudiant_id"
     t.index ["formation_id"], name: "index_aides_on_formation_id"
+  end
+
+  create_table "disponibilites", force: :cascade do |t|
+    t.integer "nb_etudiants_souhaite"
+    t.string "statut_reponse"
+    t.integer "tuteur_universitaire_id"
+    t.integer "formation_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["formation_id"], name: "index_disponibilites_on_formation_id"
+    t.index ["tuteur_universitaire_id"], name: "index_disponibilites_on_tuteur_universitaire_id"
+    t.check_constraint "statut_reponse IN (\"OK\",\"ABANDON\",\"PAS_DE_REPONSE\")"
   end
 
   create_table "etudiants", force: :cascade do |t|
@@ -58,6 +70,19 @@ ActiveRecord::Schema.define(version: 2021_05_18_081951) do
   create_table "promotions", force: :cascade do |t|
     t.string "annee", limit: 4
     t.index ["annee"], name: "index_promotions_on_annee", unique: true
+  end
+
+  create_table "tuteur_universitaires", force: :cascade do |t|
+    t.string "nom"
+    t.string "prenom"
+    t.string "alias"
+    t.string "email"
+    t.string "statut_encadrant"
+    t.string "fonction"
+    t.string "localisation"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.check_constraint "statut_encadrant IN (\"INDUSTRIE\", \"UNIVERSITAIRE\")"
   end
 
   add_foreign_key "aides", "etudiants"
