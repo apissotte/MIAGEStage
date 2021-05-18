@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_090113) do
+ActiveRecord::Schema.define(version: 2021_05_18_133829) do
 
   create_table "aides", force: :cascade do |t|
     t.boolean "cv_recu"
@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 2021_05_18_090113) do
     t.check_constraint "statut_reponse IN (\"OK\",\"ABANDON\",\"PAS_DE_REPONSE\")"
   end
 
+  create_table "entreprises", force: :cascade do |t|
+    t.string "siren", limit: 14
+    t.string "raison_sociale"
+    t.string "ville"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["siren"], name: "index_entreprises_on_siren", unique: true
+  end
+
   create_table "etudiants", force: :cascade do |t|
     t.string "num_etudiant"
     t.string "nom"
@@ -58,6 +67,27 @@ ActiveRecord::Schema.define(version: 2021_05_18_090113) do
     t.index ["formation_id"], name: "index_etudiants_formations_on_formation_id"
   end
 
+  create_table "fiche_stages", force: :cascade do |t|
+    t.string "titre"
+    t.string "poste"
+    t.string "taches"
+    t.string "statut"
+    t.string "type"
+    t.string "mention"
+    t.date "date_debut"
+    t.date "date_fin"
+    t.string "contact_nom"
+    t.string "contact_prenom"
+    t.string "contact_poste"
+    t.integer "etudiant_id"
+    t.integer "offre_id"
+    t.index ["etudiant_id"], name: "index_fiche_stages_on_etudiant_id"
+    t.index ["offre_id"], name: "index_fiche_stages_on_offre_id"
+    t.check_constraint "mention IN (\"L3\",\"M1\", \"M2\")"
+    t.check_constraint "statut IN (\"VALIDEE\",\"NON_VALIDEE\", \"NON_TRAITEE\")"
+    t.check_constraint "type IN (\"ALTERNANCE\",\"STAGE\")"
+  end
+
   create_table "formations", force: :cascade do |t|
     t.string "mention"
     t.string "libelle"
@@ -67,9 +97,58 @@ ActiveRecord::Schema.define(version: 2021_05_18_090113) do
     t.index ["promotion_id"], name: "index_formations_on_promotion_id"
   end
 
+  create_table "offres", force: :cascade do |t|
+    t.string "titre"
+    t.string "type"
+    t.string "lien_url"
+    t.string "mention"
+    t.binary "pdf"
+    t.date "date_publication"
+    t.string "sujet"
+    t.integer "entreprise_id"
+    t.index ["entreprise_id"], name: "index_offres_on_entreprise_id"
+    t.check_constraint "mention IN (\"L3\",\"M1\", \"M2\")"
+    t.check_constraint "type IN (\"STAGE\",\"ALTERNANCE\")"
+  end
+
   create_table "promotions", force: :cascade do |t|
     t.string "annee", limit: 4
     t.index ["annee"], name: "index_promotions_on_annee", unique: true
+  end
+
+  create_table "stages", force: :cascade do |t|
+    t.string "sujet"
+    t.date "date_ratification_convention"
+    t.float "gratification"
+    t.string "type"
+    t.string "commentaire"
+    t.integer "etudiant_id"
+    t.integer "formation_id"
+    t.integer "entreprise_id"
+    t.integer "tuteur_entreprise_id"
+    t.integer "tuteur_universitaire_id"
+    t.index ["entreprise_id"], name: "index_stages_on_entreprise_id"
+    t.index ["etudiant_id"], name: "index_stages_on_etudiant_id"
+    t.index ["formation_id"], name: "index_stages_on_formation_id"
+    t.index ["tuteur_entreprise_id"], name: "index_stages_on_tuteur_entreprise_id"
+    t.index ["tuteur_universitaire_id"], name: "index_stages_on_tuteur_universitaire_id"
+    t.check_constraint "type IN (\"STAGE\", \"ALTERNANCE\")"
+  end
+
+  create_table "technologies", force: :cascade do |t|
+    t.string "tag"
+    t.index ["tag"], name: "index_technologies_on_tag", unique: true
+  end
+
+  create_table "tuteur_entreprises", force: :cascade do |t|
+    t.string "nom"
+    t.string "prenom"
+    t.string "email"
+    t.string "telephone", limit: 10
+    t.integer "entreprise_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["entreprise_id"], name: "index_tuteur_entreprises_on_entreprise_id"
   end
 
   create_table "tuteur_universitaires", force: :cascade do |t|
@@ -85,7 +164,26 @@ ActiveRecord::Schema.define(version: 2021_05_18_090113) do
     t.check_constraint "statut_encadrant IN (\"INDUSTRIE\", \"UNIVERSITAIRE\")"
   end
 
+  create_table "visites", force: :cascade do |t|
+    t.date "date"
+    t.string "statut"
+    t.boolean "relance"
+    t.string "commentaire"
+    t.integer "stage_id"
+    t.index ["stage_id"], name: "index_visites_on_stage_id"
+  end
+
   add_foreign_key "aides", "etudiants"
   add_foreign_key "aides", "formations"
+  add_foreign_key "fiche_stages", "etudiants"
+  add_foreign_key "fiche_stages", "offres"
   add_foreign_key "formations", "promotions"
+  add_foreign_key "offres", "entreprises"
+  add_foreign_key "stages", "entreprises"
+  add_foreign_key "stages", "etudiants"
+  add_foreign_key "stages", "formations"
+  add_foreign_key "stages", "tuteur_entreprises"
+  add_foreign_key "stages", "tuteur_universitaires"
+  add_foreign_key "tuteur_entreprises", "entreprises"
+  add_foreign_key "visites", "stages"
 end
