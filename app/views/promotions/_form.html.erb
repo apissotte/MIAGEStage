@@ -1,0 +1,17 @@
+<%= form_with model: promotion do |f| %>
+  <div class="mb-3">
+    <%= f.label :annee, class: 'form-label' %><br>
+    <%= f.text_field :annee, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <% promotion.errors.full_messages_for(:annee).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <%= link_to "Annuler", promotions_path, class: "btn btn-outline-primary me-2"%>
+    <%= f.submit 'Créer', class: 'btn btn-primary' %>
+  </div>
+<% end %>

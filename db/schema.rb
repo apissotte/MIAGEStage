@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_160203) do
+ActiveRecord::Schema.define(version: 2021_05_19_111306) do
 
   create_table "aides", force: :cascade do |t|
     t.boolean "cv_recu"
@@ -138,7 +138,9 @@ ActiveRecord::Schema.define(version: 2021_05_18_160203) do
 
   create_table "promotions", force: :cascade do |t|
     t.string "annee", limit: 4
+    t.string "statut"
     t.index ["annee"], name: "index_promotions_on_annee", unique: true
+    t.check_constraint "statut IN (\"OUVERTE\", \"CLOTUREE\")"
   end
 
   create_table "stages", force: :cascade do |t|
