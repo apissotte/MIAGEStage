@@ -15,7 +15,6 @@ class FormationsController < ApplicationController
   end
 
   def update
-    puts params[:id]
     formation = Formation.find(params[:id])
     formation.update(post_params)
 

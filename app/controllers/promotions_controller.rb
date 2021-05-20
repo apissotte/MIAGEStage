@@ -38,25 +38,4 @@ class PromotionsController < ApplicationController
     params.require(:promotion).permit(:annee)
   end
 
-  # TODO Désactiver
-  def edit
-    @promotion = Promotion.find(params[:id])
-  end
-
-  # TODO Désactiver
-  def update
-    @promotion = Promotion.find(params[:id])
-
-    if @promotion.update(post_params)
-      redirect_to @promotion
-    else
-      render :edit
-    end
-  end
-
-  # TODO Désactiver
-  def new
-    @promotion = Promotion.new
-  end
-
 end
