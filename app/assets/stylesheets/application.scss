@@ -29,6 +29,53 @@ $primary: $purple;
 $secondary: $mediumblue;
 $dark: $darkgrey;
 
+
+// - - - Bootstrap Table Override - - - start //
+$table-color: #009879;
+
+.table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.table thead tr {
+  background-color: $table-color;
+  color: #ffffff;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table th,
+.table td {
+  height: 50px;
+  padding: 12px 15px;
+  vertical-align: middle;
+}
+
+.table tbody tr {
+  border-bottom: thin solid #dddddd;
+  color: $darkgrey;
+}
+
+.table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.table tbody tr:last-of-type {
+  border-bottom: 2px solid $table-color;
+}
+
+.table tbody tr.active-row {
+  font-weight: bold;
+  color: $table-color;
+}
+// - - - Bootstrap Table Override - - - end //
+
+
 // Import all Bootstrap dependencies
 // DO NOT CHANGE DIRECTOR EVEN IF IT IS RED-UNDERLINED
 @import "bootstrap/scss/bootstrap";
