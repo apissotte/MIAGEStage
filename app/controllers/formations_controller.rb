@@ -4,21 +4,29 @@ class FormationsController < ApplicationController
     @formation = Formation.create
   end
 
+  def new
+    @formation = Formation.new
+    @formation.promotion_id = params[:promotion_id]
+  end
+
   def create
     @formation = Formation.new(post_params)
-    puts @formation
+
     if @formation.save
-      redirect_to promotions_path
-    else
-      redirect_to @formation.promotion
+      redirect_to promotion_path(@formation.promotion)
     end
   end
 
-  def update
-    formation = Formation.find(params[:id])
-    formation.update(post_params)
+  def edit
+    @formation = Formation.find(params[:id])
+  end
 
-    redirect_to formation.promotion
+  def update
+    @formation = Formation.find(params[:id])
+
+    if @formation.update(post_params)
+      redirect_to @formation.promotion
+    end
   end
 
   def destroy

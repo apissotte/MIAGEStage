@@ -1,9 +1,10 @@
 <div class="d-flex justify-content-between mb-4">
   <h3 class="mb-0">Promotions & Formations</h3>
-  <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    <%= fa_icon "plus", class: 'me-1' %>
-    Nouvelle promotion
-  </button>
+
+  <%= link_to new_promotion_path(@promotion), remote: true, class: 'btn btn-outline-secondary',
+              data: { "bs-toggle": 'modal', "bs-target": '#newPromotionModal' } do %>
+    <%= fa_icon "plus", class: "fa-lg me-1" %> Nouvelle promotion
+  <% end %>
 </div>
 
 <table class="table">
@@ -55,16 +56,15 @@
 
 
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- New Promotion Modal -->
+<div class="modal fade" id="newPromotionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="newPromotionModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Nouvelle promotion</h5>
+        <h5 class="modal-title" id="newPromotionModalLabel">Nouvelle promotion</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <%= render "form", promotion: @promotion %>
+      <div class="modal-body inner-import-new">
       </div>
     </div>
   </div>

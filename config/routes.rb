@@ -1,13 +1,20 @@
 Rails.application.routes.draw do
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
-  resources :promotions, only: [:index, :show, :create, :destroy] do
+  # Contrôleur PromotionsController
+  resources :promotions do
     member do
       put 'close', to: 'promotions#close'
     end
   end
-  
-  resources :formations, only: [:create, :edit, :update, :destroy]
 
+  # Contrôleur FormationsController
+  resources :formations
+
+  # Contrôleur EntreprisesController
+  resources :entreprises
+
+  # Contrôleur StaticController
   get '/static', to: 'static#index'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
 end
