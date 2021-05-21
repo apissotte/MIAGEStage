@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_19_111306) do
+ActiveRecord::Schema.define(version: 2021_05_21_093500) do
 
   create_table "aides", force: :cascade do |t|
     t.boolean "cv_recu"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2021_05_19_111306) do
     t.string "ville"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "pays", default: "France"
     t.index ["siren"], name: "index_entreprises_on_siren", unique: true
   end
 

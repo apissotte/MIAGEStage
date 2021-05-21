@@ -24,10 +24,11 @@
 
     <div>
       <% if @promotion.statut == 'OUVERTE' %>
-        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#newFormationModal">
+        <%= link_to new_formation_path(@formation, promotion_id: @formation.promotion_id), remote: true, class: "btn btn-outline-primary me-2",
+                    data: { "bs-toggle": 'modal', "bs-target": '#newFormationModal' } do %>
           <%= fa_icon "plus", class: 'me-1' %>
           Nouvelle formation
-        </button>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -82,8 +83,7 @@
         <h5 class="modal-title" id="newFormationModalLabel">Nouvelle formation</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <%= render "formations/form", formation: @formation %>
+      <div class="modal-body inner-import-new">
       </div>
     </div>
   </div>
