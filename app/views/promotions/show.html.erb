@@ -19,7 +19,7 @@
   </div>
 
 
-  <div class="d-flex justify-content-between">
+  <div class="d-flex justify-content-between align-items-center mt-4">
     <h5 class="mb-0">Formations</h5>
 
     <div>
@@ -55,12 +55,12 @@
           <td class="align-middle text-end">
             <%= link_to edit_formation_path(f), remote: true, class: 'me-2',
                         data: { "bs-toggle": 'modal', "bs-target": '#editFormationModal' } do %>
-              <% fa_icon "edit" %>
+              <% fa_icon "edit", class: "fa-2x" %>
             <% end %>
 
             <%= link_to formation_path(f), method: :delete, class: 'me-2 text-danger',
                         data: { confirm: "Etes-vous sûr de vouloir supprimer cette formation ?" } do %>
-              <% fa_icon "trash" %>
+              <% fa_icon "trash", class: "fa-2x" %>
             <% end %>
           </td>
         <% end %>

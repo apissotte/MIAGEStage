@@ -31,11 +31,11 @@ $dark: $darkgrey;
 
 
 // - - - Bootstrap Table Override - - - start //
-$table-color: #009879;
+$table-color: $primary; // #009879;
 
 .table {
   border-collapse: collapse;
-  margin: 25px 0;
+  margin: 10px 0;
   font-size: 0.9em;
   font-family: sans-serif;
   min-width: 400px;
