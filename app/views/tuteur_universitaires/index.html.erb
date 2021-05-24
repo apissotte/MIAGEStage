@@ -29,7 +29,7 @@
           <td class="text-center"><%= t.email %></td>
           <td class="text-center">
             <%= link_to tuteur_universitaire_url(t), class: 'btn btn-primary' do %>
-              <% fa_icon "edit", class: "fa-2x" %>
+              <% fa_icon "user", class: "fa-2x" %>
             <% end %>
             <%= link_to edit_tuteur_universitaire_path(t), remote: true, class: 'btn btn-secondary',
                         data: { "bs-toggle": 'modal', "bs-target": '#editTuteurModal' } do %>
