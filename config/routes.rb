@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/static', to: 'static#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   # Contrôleur PromotionsController
@@ -13,6 +14,9 @@ Rails.application.routes.draw do
 
   # Contrôleur EntreprisesController
   resources :entreprises
+
+  # Contrôleur TuteurUniversitaireController
+  resources :tuteur_universitaires
 
   # Contrôleur StaticController
   get '/static', to: 'static#index'
