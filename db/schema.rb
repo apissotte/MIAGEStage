@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_21_093500) do
+ActiveRecord::Schema.define(version: 2021_05_25_125243) do
 
   create_table "aides", force: :cascade do |t|
     t.boolean "cv_recu"
@@ -55,9 +55,16 @@ ActiveRecord::Schema.define(version: 2021_05_21_093500) do
     t.string "statut_arrivant_L3", limit: 5
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_etudiants_on_email", unique: true
     t.index ["email_personnelle"], name: "index_etudiants_on_email_personnelle", unique: true
     t.index ["email_universitaire"], name: "index_etudiants_on_email_universitaire", unique: true
     t.index ["num_etudiant"], name: "index_etudiants_on_num_etudiant", unique: true
+    t.index ["reset_password_token"], name: "index_etudiants_on_reset_password_token", unique: true
     t.check_constraint "statut_arrivant_L3 IN (\"DSPEG\", \"MIAGE\")"
   end
 
