@@ -12,21 +12,21 @@
               my_hash = JSON.parse(f.read)
             end
           %>
-          <span class="mb-2"><i class="fas fa-user"></i> <%= my_hash['nom'] %></span>
+          <span class="mb-2"><%= fa_icon "user", class: "fa-lg me-1" %> <%= my_hash['nom'] %></span>
           <br/>
-          <span class="mb-2"><i class="fas fa-envelope"></i> <%= my_hash['email'] %></span>
+          <span class="mb-2"><%= fa_icon "envelope", class: "fa-lg me-1" %> <%= my_hash['email'] %></span>
           <br/>
-          <span class="mb-2"><i class="fas fa-phone-alt"></i> <%= my_hash['telephone'] %></span>
+          <span class="mb-2"><%= fa_icon "phone", class: "fa-lg me-1" %> <%= my_hash['telephone'] %></span>
         </div>
       </div>
       <div class="col" style="text-align: center">
         <div class="container pb-4">
           <h5 class="pb-3">A PROPOS</h5>
           <a class="btn btn-outline-light btn-floating m-1" href="https://fr.linkedin.com/company/miage-connection" role="button">
-            <i class="fab fa-linkedin-in"></i>
+            <%= fa_icon "linkedin", class: "fa-lg me-1" %>
           </a>
           <a class="btn btn-outline-light btn-floating m-1" href="https://miage-bordeaux.fr/" role="button">
-            <i class="fab fa-google"></i>
+            <%= fa_icon "google", class: "fa-lg me-1" %>
           </a>
         </div>
       </div>

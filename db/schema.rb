@@ -70,11 +70,12 @@ ActiveRecord::Schema.define(version: 2021_05_21_093500) do
 
   create_table "evaluations", force: :cascade do |t|
     t.text "contenu"
-    t.boolean "auto_evalution"
+    t.boolean "auto_evaluation"
     t.integer "stage_id"
     t.integer "ge_format_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "finale"
     t.index ["ge_format_id"], name: "index_evaluations_on_ge_format_id"
     t.index ["stage_id"], name: "index_evaluations_on_stage_id"
   end
@@ -116,6 +117,19 @@ ActiveRecord::Schema.define(version: 2021_05_21_093500) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "notation_formats", force: :cascade do |t|
+    t.string "contenu"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "notations", force: :cascade do |t|
+    t.string "note"
+    t.string "commentaire"
+    t.integer "stage_id"
+    t.integer "notation_format_id"
+  end
+
   create_table "offres", force: :cascade do |t|
     t.string "titre"
     t.string "type"
@@ -148,7 +162,7 @@ ActiveRecord::Schema.define(version: 2021_05_21_093500) do
     t.string "sujet"
     t.date "date_ratification_convention"
     t.float "gratification"
-    t.string "type"
+    t.string "type_stage"
     t.string "commentaire"
     t.integer "etudiant_id"
     t.integer "formation_id"
@@ -160,7 +174,7 @@ ActiveRecord::Schema.define(version: 2021_05_21_093500) do
     t.index ["formation_id"], name: "index_stages_on_formation_id"
     t.index ["tuteur_entreprise_id"], name: "index_stages_on_tuteur_entreprise_id"
     t.index ["tuteur_universitaire_id"], name: "index_stages_on_tuteur_universitaire_id"
-    t.check_constraint "type IN (\"STAGE\", \"ALTERNANCE\")"
+    t.check_constraint "type_stage IN (\"STAGE\", \"ALTERNANCE\")"
   end
 
   create_table "technologies", force: :cascade do |t|
@@ -208,6 +222,8 @@ ActiveRecord::Schema.define(version: 2021_05_21_093500) do
   add_foreign_key "fiche_stages", "etudiants"
   add_foreign_key "fiche_stages", "offres"
   add_foreign_key "formations", "promotions"
+  add_foreign_key "notations", "notation_formats"
+  add_foreign_key "notations", "stages"
   add_foreign_key "offres", "entreprises"
   add_foreign_key "stages", "entreprises"
   add_foreign_key "stages", "etudiants"
