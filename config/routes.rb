@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :tuteur_universitaires
   devise_for :etudiants
   # Require a root to for devise
   root to: 'static#index'
