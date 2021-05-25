@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
+  # Routes pour Devise
   devise_for :tuteur_universitaires
-  devise_for :etudiants
+  devise_for :etudiants, controllers: {
+    registrations: "etudiants/registrations"
+  }
+
   # Require a root to for devise
   root to: 'static#index'
 
