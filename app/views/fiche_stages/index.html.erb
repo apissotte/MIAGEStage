@@ -1,0 +1,11 @@
+<h1>Fiches de stage</h1>
+
+<ul>
+  <% @fichestage.each do |fichestage| %>
+    <li>
+      Fiche n°<%= fichestage.id %> - <%= link_to fichestage.titre, fiche_stage_path(fichestage) %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Nouvelle fiche de stage", new_fiche_stages_path %>
