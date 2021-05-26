@@ -10,9 +10,9 @@ Roles :
 <% role = 1 %>
 
 <%
-  offres =
+  etudiants =
     '<li class="nav-item">
-      <a class="nav-link" href="#"><p>OFFRES</p></a>
+      <a class="nav-link" href="#"><p>ETUDIANTS</p></a>
     </li>'.html_safe
   evaluation =
     '<li class="nav-item">
@@ -38,6 +38,23 @@ Roles :
     '<li class="nav-item">
       <a class="nav-link" href="promotions"><p>PROMOTIONS</p></a>
     </li>'.html_safe
+  entreprise =
+    '<li class="nav-item">
+      <a class="nav-link" href="#"><p>ENTREPRISES</p></a>
+    </li>'.html_safe
+  tuteur =
+    '<li class="nav-item">
+      <a class="nav-link" href="#"><p>TUTEURS</p></a>
+    </li>'.html_safe
+  fiche =
+    '<li class="nav-item">
+      <a class="nav-link" href="#"><p>FICHE STAGE</p></a>
+    </li>'.html_safe
+
+  grille = '<select class="dropdown" name="grille">
+          <option selected class="dropdown-item" >GRILLE</option>
+          <option class="dropdown-item" value="./tableaudebord">Toutes les promotions</option>
+          </select>'.html_safe
 %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#"></a>
@@ -53,11 +70,15 @@ Roles :
   <% when 1 %>
 
         <%= promotions %>
-        <%= offres %>
+        <%= etudiants %>
+        <%= entreprise %>
+        <%= tuteur %>
+        <%= fiche %>
         <%= tableaudebord %>
         <%= statistiques %>
         <%= evolution %>
         <%= grilleevaluation %>
+        <%= grille %>
 
 
   <% when 2 %>
@@ -67,7 +88,6 @@ Roles :
 
   <% when 3 %>
 
-        <%= offres %>
         <%= evaluation %>
 
 <% end %>
