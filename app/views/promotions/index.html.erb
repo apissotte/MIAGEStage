@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between mb-4">
   <h3 class="mb-0">Promotions & Formations</h3>
 
-  <%= link_to new_promotion_path(@promotion), remote: true, class: 'btn btn-outline-secondary',
+  <%= link_to new_promotion_path, remote: true, class: 'btn btn-outline-secondary',
               data: { "bs-toggle": 'modal', "bs-target": '#newPromotionModal' } do %>
     <%= fa_icon "plus", class: "fa-lg me-1" %> Nouvelle promotion
   <% end %>

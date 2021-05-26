@@ -25,13 +25,14 @@ ActiveRecord::Schema.define(version: 2021_05_25_075115) do
   end
 
   create_table "disponibilites", force: :cascade do |t|
-    t.integer "nb_etudiants_souhaite"
     t.string "statut_reponse"
     t.integer "tuteur_universitaire_id"
-    t.integer "formation_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["formation_id"], name: "index_disponibilites_on_formation_id"
+    t.integer "nb_etudiants_souhaite", default: 0
+    t.integer "promotion_id"
+    t.index ["promotion_id"], name: "index_disponibilites_on_promotion_id"
+    t.index ["tuteur_universitaire_id", "promotion_id"], name: "index_disponibilites_on_tuteur_universitaire_id_and_promotion_id", unique: true
     t.index ["tuteur_universitaire_id"], name: "index_disponibilites_on_tuteur_universitaire_id"
     t.check_constraint "statut_reponse IN (\"OK\",\"ABANDON\",\"PAS_DE_REPONSE\")"
   end
@@ -51,13 +52,20 @@ ActiveRecord::Schema.define(version: 2021_05_25_075115) do
     t.string "nom"
     t.string "prenom"
     t.string "email_universitaire"
-    t.string "email_personnelle"
+    t.string "email_personnel"
     t.string "statut_arrivant_L3", limit: 5
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["email_personnelle"], name: "index_etudiants_on_email_personnelle", unique: true
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_etudiants_on_email", unique: true
+    t.index ["email_personnel"], name: "index_etudiants_on_email_personnel", unique: true
     t.index ["email_universitaire"], name: "index_etudiants_on_email_universitaire", unique: true
     t.index ["num_etudiant"], name: "index_etudiants_on_num_etudiant", unique: true
+    t.index ["reset_password_token"], name: "index_etudiants_on_reset_password_token", unique: true
     t.check_constraint "statut_arrivant_L3 IN (\"DSPEG\", \"MIAGE\")"
   end
 
@@ -83,24 +91,35 @@ ActiveRecord::Schema.define(version: 2021_05_25_075115) do
 
   create_table "fiche_stages", force: :cascade do |t|
     t.string "titre"
-    t.string "poste"
-    t.string "taches"
-    t.string "statut"
-    t.string "type"
+    t.string "type_stage"
     t.string "mention"
     t.date "date_debut"
     t.date "date_fin"
-    t.binary "fiche_papier"
+    t.string "statut"
+    t.string "poste"
+    t.string "taches"
+    t.string "technologies"
     t.string "contact_nom"
     t.string "contact_prenom"
     t.string "contact_poste"
+    t.string "tuteur_nom"
+    t.string "tuteur_prenom"
+    t.string "tuteur_fonction"
+    t.string "tuteur_telephone"
+    t.string "tuteur_email"
+    t.string "entreprise_nom"
+    t.string "entreprise_siren"
+    t.string "entreprise_cp"
+    t.string "entreprise_ville"
+    t.string "entreprise_pays"
+    t.string "commentaire_validation"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.integer "etudiant_id"
-    t.integer "offre_id"
     t.index ["etudiant_id"], name: "index_fiche_stages_on_etudiant_id"
-    t.index ["offre_id"], name: "index_fiche_stages_on_offre_id"
-    t.check_constraint "mention IN (\"L3\",\"M1\", \"M2\")"
-    t.check_constraint "statut IN (\"VALIDEE\",\"NON_VALIDEE\", \"NON_TRAITEE\")"
-    t.check_constraint "type IN (\"ALTERNANCE\",\"STAGE\")"
+    t.check_constraint "mention IN (\"L3\",\"M1\",\"M2\")"
+    t.check_constraint "statut IN (\"BROUILLON\", \"VALIDEE\",\"REFUSEE\",\"EN_ATTENTE_DE_VALIDATION\")"
+    t.check_constraint "type_stage IN (\"ALTERNANCE\",\"STAGE\")"
   end
 
   create_table "formations", force: :cascade do |t|
@@ -205,6 +224,12 @@ ActiveRecord::Schema.define(version: 2021_05_25_075115) do
     t.string "localisation"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_tuteur_universitaires_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_tuteur_universitaires_on_reset_password_token", unique: true
     t.check_constraint "statut_encadrant IN (\"INDUSTRIE\", \"UNIVERSITAIRE\")"
   end
 
@@ -222,7 +247,6 @@ ActiveRecord::Schema.define(version: 2021_05_25_075115) do
   add_foreign_key "evaluations", "ge_formats"
   add_foreign_key "evaluations", "stages"
   add_foreign_key "fiche_stages", "etudiants"
-  add_foreign_key "fiche_stages", "offres"
   add_foreign_key "formations", "promotions"
   add_foreign_key "notations", "notation_formats"
   add_foreign_key "notations", "stages"
