@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   }
 
   devise_scope :etudiant do
-    get '/sign_in', to: 'devise/sessions#new'
-    get '4d6a8d14-ef57-4da8-908d-5b3388bfdf48/sign_up', to: 'etudiants/registrations#new'
+    # get '/sign_in', to: 'devise/sessions#new'
+    get '4d6a8d14-ef57-4da8-908d-5b3388bfdf48/sign_up', to: 'etudiants/registrations#new', :as => 'guid_etudiant_sign_up'
   end
 
 
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   }
 
   devise_scope :tuteur_universitaire do
-    get '/sign_in', to: 'devise/sessions#new'
+    # get '/sign_in', to: 'devise/sessions#new'
     get 'f5506526-0a7d-40af-a39f-e456e5991564/sign_up', to: 'tuteur_universitaires/registrations#new'
   end
 
@@ -28,8 +28,8 @@ Rails.application.routes.draw do
     registrations: "responsable_stages/registrations"
   }
 
-  devise_scope :tuteur_universitaire do
-    get '/sign_in', to: 'devise/sessions#new'
+  devise_scope :responsable_stage do
+    # get '/sign_in', to: 'devise/sessions#new'
     get '505cccad-922c-4251-bae6-55c5f91df05b/sign_up', to: 'responsable_stages/registrations#new'
   end
 

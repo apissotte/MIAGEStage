@@ -3,8 +3,12 @@
   <div class="container">
     <div class="masthead-subheading">Bienvenue sur le site des stages de la MIAGE!</div>
     <div class="masthead-heading text-uppercase">Une plateforme de gestion des stages dediée à tous les acteurs de la filière MIAGE</div>
-    <a class="btn btn-round btn-xl text-uppercase" href="/4d6a8d14-ef57-4da8-908d-5b3388bfdf48/sign_up">S'inscrire</a>
-    <a class="btn btn-round btn-xl text-uppercase" href="/sign_in">Se connecter</a>
+
+    <%= link_to 'S\'inscrire', guid_etudiant_sign_up_path, class: 'btn btn-round btn-xl text-uppercase mb-2' %><br>
+    <%= link_to 'Se connecter étudiant', etudiant_session_path, class: 'btn btn-round btn-xl text-uppercase mb-2' %><br>
+    <%= link_to 'Se connecter tuteur universitaire', tuteur_universitaire_session_path, class: 'btn btn-round btn-xl text-uppercase mb-2' %><br>
+    <%= link_to 'Se connecter responsable des stages', responsable_stage_session_path, class: 'btn btn-round btn-xl text-uppercase mb-2' %>
+
   </div>
 </header>
 <!-- Services-->
