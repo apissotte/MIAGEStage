@@ -69,32 +69,35 @@ Roles :
         </li>
         <%= conn %>
 
-      <% when 2 %>
+        <% if tuteur_universitaire_signed_in? %>
 
-        <%= tableaudebord %>
-        <%= evolution %>
-        <li class="nav-item">
-          <select class="dropdown dropdownNavBar" onChange="window.location.href=this.value" style="margin-left: 15px;margin-right: 15px;">
-            <option disabled selected><%= fa_icon "user", class: "fa-2x text-purple" %>NOM Prénom</option>
-            <option value="./">Gestion du compte</option>
-            <option value="./">Déconnexion</option>
-          </select>
-          </a>
-        </li>
-        <%= conn %>
+          <%= tableaudebord %>
+          <%= evolution %>
+          <li class="nav-item">
+            <select class="dropdown dropdownNavBar" onChange="window.location.href=this.value" style="margin-left: 15px;margin-right: 15px;">
+              <option disabled selected><%= fa_icon "user", class: "fa-2x text-purple" %><%= current_tuteur_universitaire.nom %>  <%= current_tuteur_universitaire.prenom %></option>
+              <option><%= link_to 'Edition profile', edit_tuteur_universitaire_registration_path, :class => 'navbar-link' %></option>
+              <option><%= link_to "Deconnexion", destroy_tuteur_universitaire_session_path, method: :delete, :class => 'navbar-link' %></option>
+            </select>
+            </a>
+          </li>
+          <%= conn %>
 
-      <% when 3 %>
+        <% end %>
 
-        <%= evaluation %>
-        <li class="nav-item">
-          <select class="dropdown dropdownNavBar" onChange="window.location.href=this.value" style="margin-left: 15px;margin-right: 15px;">
-            <option disabled selected><%= fa_icon "user", class: "fa-2x text-purple" %>NOM Prénom</option>
-            <option value="/">Gestion du compte</option>
-            <option value="/">Déconnexion</option>
-          </select>
-          </a>
-        </li>
-        <%= conn %>
+        <% if tuteur_universitaire_signed_in? %>
+          <%= evaluation %>
+          <li class="nav-item">
+            <select class="dropdown dropdownNavBar" onChange="window.location.href=this.value" style="margin-left: 15px;margin-right: 15px;">
+              <option disabled selected><%= fa_icon "user", class: "fa-2x text-purple" %><%= current_etudiant.nom %>  <%= current_etudiant.prenom %></option>
+              <option><%= link_to 'Edition profile', edit_etudiant_registration_path, :class => 'navbar-link' %></option>
+              <option><%= link_to "Deconnexion", destroy_etudiant_session_path, method: :delete, :class => 'navbar-link' %></option>
+            </select>
+            </a>
+          </li>
+          <%= conn %>
+        <% end %>
+
 
       <% end %>
 
