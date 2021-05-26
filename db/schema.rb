@@ -51,11 +51,11 @@ ActiveRecord::Schema.define(version: 2021_05_21_093500) do
     t.string "nom"
     t.string "prenom"
     t.string "email_universitaire"
-    t.string "email_personnelle"
+    t.string "email_personnel"
     t.string "statut_arrivant_L3", limit: 5
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["email_personnelle"], name: "index_etudiants_on_email_personnelle", unique: true
+    t.index ["email_personnel"], name: "index_etudiants_on_email_personnel", unique: true
     t.index ["email_universitaire"], name: "index_etudiants_on_email_universitaire", unique: true
     t.index ["num_etudiant"], name: "index_etudiants_on_num_etudiant", unique: true
     t.check_constraint "statut_arrivant_L3 IN (\"DSPEG\", \"MIAGE\")"

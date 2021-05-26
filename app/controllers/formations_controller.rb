@@ -29,6 +29,24 @@ class FormationsController < ApplicationController
     end
   end
 
+  def next
+    @formations = Formation
+                    .includes(:promotion)
+                    .order('promotions.annee ASC', mention: :asc)
+    @formation = Formation.find(params[:id])
+    @etudiants = @formation.etudiants.order(:nom, :prenom, :num_etudiant)
+  end
+
+  def transfert
+    next_formation = Formation.find(params[:post][:next_formation])
+    params[:post][:etudiant_ids].each do |etudiant_id|
+      unless etudiant_id.empty?
+        etudiant = Etudiant.find(etudiant_id)
+        etudiant.transfert(next_formation)
+      end
+    end
+  end
+
   def destroy
     formation = Formation.find(params[:id])
     promotion = formation.promotion

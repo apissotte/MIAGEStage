@@ -10,13 +10,20 @@ Rails.application.routes.draw do
   end
 
   # Contrôleur FormationsController
-  resources :formations
+  resources :formations do
+    member do
+      get 'next', to: 'formations#next'
+      post 'transfert', to: 'formations#transfert'
+    end
+  end
 
   # Contrôleur EntreprisesController
   resources :entreprises
 
   # Contrôleur TuteurUniversitaireController
   resources :tuteur_universitaires
+
+  resources :etudiants
 
   # Contrôleur StaticController
   get '/static', to: 'static#index'
