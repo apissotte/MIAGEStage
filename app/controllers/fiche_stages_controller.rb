@@ -1,6 +1,8 @@
 class FicheStagesController < ApplicationController
   def index
     @fichestage = FicheStage.all
+    @fichestage_todo = FicheStage.where(statut: "EN_ATTENTE_DE_VALIDATION")
+    @fichestage_draft = FicheStage.where(statut: "BROUILLON")
   end
 
   def show
@@ -13,10 +15,21 @@ class FicheStagesController < ApplicationController
 
   def create
     @fichestage = FicheStage.new(fiche_stage_params)
-    @fichestage.update(statut: "BROUILLON")
+    @fichestage.statut = "BROUILLON"
 
     if @fichestage.save
-      #redirect_to @fichestage
+      redirect_to @fichestage
+    else
+      render :new
+    end
+  end
+
+  def csend
+    @fichestage = FicheStage.new(fiche_stage_params)
+    @fichestage.statut = "EN_ATTENTE_DE_VALIDATION"
+
+    if @fichestage.save
+      redirect_to @fichestage
     else
       render :new
     end
@@ -28,12 +41,29 @@ class FicheStagesController < ApplicationController
 
   def update
     @fichestage = FicheStage.find(params[:id])
+    if @fichestage.statut == "REFUSEE"
+      @fichestage.statut = "BROUILLON"
+    end
 
     if @fichestage.update(fiche_stage_params)
       redirect_to @fichestage
     else
-      render :edit
+      render :show
     end
+  end
+
+  def usend
+    @fichestage = FicheStage.find(params[:id])
+
+    if @fichestage.update(statut: "EN_ATTENTE_DE_VALIDATION")
+      redirect_to @fichestage
+    else
+      render :show
+    end
+  end
+
+  def validate
+    @fichestage = FicheStage.find(params[:id])
   end
 
   private

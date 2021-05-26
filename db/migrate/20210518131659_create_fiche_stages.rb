@@ -30,6 +30,8 @@ class CreateFicheStages < ActiveRecord::Migration[6.1]
 
       t.string :commentaire_validation
 
+      t.timestamps
+
       t.belongs_to :etudiant, foreign_key: true
     end
     add_check_constraint :fiche_stages, 'statut IN ("BROUILLON", "VALIDEE","REFUSEE","EN_ATTENTE_DE_VALIDATION")'

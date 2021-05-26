@@ -8,9 +8,20 @@ h1 {
   background-color: #8B0146;
   color: #FFFFFF;
 }
+
 h2 {
   color: #8B0146;
   text-transform: uppercase;
+}
+
+.fstitle {
+  background-color: #8B0146;
+}
+
+.statcre {
+  text-align: end;
+  color: #FFFFFF;
+  margin: auto !important;
 }
 
 .vertical-line {
@@ -22,19 +33,20 @@ h2 {
 }
 
 .full-field input, .full-field textarea {
+  padding-left: 20px;
   width: 100%;
   border-radius: 10px;
 }
 .half-field input, .half-field select {
-  padding-left: 30px;
+  padding-left: 20px;
   width: 100%;
   border-radius: 10px;
 }
 
 .btn-round {
-  width: 80% !important;
+  max-width: 100% !important;
 }
 
 .btn-end {
-  text-align: end;
+  //text-align: end;
 }

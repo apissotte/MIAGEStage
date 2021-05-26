@@ -8,4 +8,12 @@
   <% end %>
 </ul>
 
-<%= link_to "Nouvelle fiche de stage", new_fiche_stages_path %>
+<% @fichestage_todo.each do |fstd| %>
+  Fiche n°<%= fstd.id %> - <%= link_to fstd.titre, fiche_stages_validate_path(fstd) %>
+<% end %>
+<% @fichestage_draft.each do |fsd| %>
+  <%= fsd.id %>
+<% end %>
+
+<br/><br/>
+<%= link_to "Nouvelle fiche de stage", new_fiche_stage_path %>

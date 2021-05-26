@@ -102,6 +102,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_160203) do
     t.string "entreprise_ville"
     t.string "entreprise_pays"
     t.string "commentaire_validation"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.integer "etudiant_id"
     t.index ["etudiant_id"], name: "index_fiche_stages_on_etudiant_id"
     t.check_constraint "mention IN (\"L3\",\"M1\",\"M2\")"
