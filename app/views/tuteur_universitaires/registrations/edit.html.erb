@@ -1,7 +1,7 @@
-<h2>Edition profile<%= resource_name.to_s.humanize %></h2>
+<h2>Edition profile  <%= resource_name.to_s.humanize %></h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "etudiants/shared/error_messages", resource: resource %>
+  <%= render "tuteur_universitaires/shared/error_messages", resource: resource %>
 
   <div class="row">
     <div class="col-12 col-sm-6">
@@ -32,6 +32,20 @@
         <%= f.label :current_password, 'Mot de passe actuel' %> <i>(nous avons besoin de votre mot de passe actuel pour confirmer vos modifications)</i><br />
         <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control' %>
       </div>
+      <div class="mb-3">
+        <%= f.label :fonction,'Fonction', class: 'form-label' %><br>
+        <%= f.text_field :fonction, class: 'form-control' %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :localisation,'Localisation', class: 'form-label' %><br>
+        <%= f.text_field :localisation, class: 'form-control' %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :statut_encadrant, 'Statut encadrant', class: 'form-label' %><br>
+        <%= f.select :statut_encadrant, TuteurUniversitaire.statut_encadrants.keys, {}, { class: 'form-select' } %>
+      </div>
     </div>
 
   </div>
@@ -39,4 +53,5 @@
   <div class="actions d-flex justify-content-start mb-2">
     <%= f.submit "Mise à jour", class: 'btn btn-primary' %>
   </div>
+  <%= link_to "retour", :back %>
 <% end %>

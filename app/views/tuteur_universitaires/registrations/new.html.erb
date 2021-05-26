@@ -1,14 +1,13 @@
-<h2>Inscription étudiante</h2>
+<h2>Inscription tuteur universitaire</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "etudiants/shared/error_messages", resource: resource %>
+  <%= render "tuteur_universitaires/shared/error_messages", resource: resource %>
 
   <div class="row">
     <div class="col-12 col-sm-6">
       <div class="field mb-3">
         <%= f.label :email, 'Email universitaire', class: 'form-label' %><br />
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control'%>
-        <%= f.hidden_field :email_universitaire, class: 'form-control' %>
       </div>
 
       <div class="field mb-3">
@@ -27,12 +26,7 @@
 
     <div class="col-12 col-sm-6">
       <div class="mb-3">
-        <%= f.label :num_etudiant, 'Numéro étudiant', class: 'form-label'%><br>
-        <%= f.text_field :num_etudiant, class: 'form-control' %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :nom, class: 'form-label' %><br>
+        <%= f.label :nom, 'Non ', class: 'form-label'%><br>
         <%= f.text_field :nom, class: 'form-control' %>
       </div>
 
@@ -42,13 +36,23 @@
       </div>
 
       <div class="mb-3">
-        <%= f.label :email_personnelle, class: 'form-label' %><br>
-        <%= f.text_field :email_personnelle, class: 'form-control' %>
+        <%= f.label :alias, 'Alias', class: 'form-label' %><br>
+        <%= f.text_field :alias, class: 'form-control' %>
       </div>
 
       <div class="mb-3">
-        <%= f.label :statut_arrivant_L3, 'Statut arrivant L3', class: 'form-label' %><br>
-        <%= f.select :statut_arrivant_L3, Etudiant.statut_arrivant_L3s.keys, {}, { class: 'form-select' } %>
+        <%= f.label :fonction,'Fonction', class: 'form-label' %><br>
+        <%= f.text_field :fonction, class: 'form-control' %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :localisation,'Localisation', class: 'form-label' %><br>
+        <%= f.text_field :localisation, class: 'form-control' %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :statut_encadrant, 'Statut encadrant', class: 'form-label' %><br>
+        <%= f.select :statut_encadrant, TuteurUniversitaire.statut_encadrants.keys, {}, { class: 'form-select' } %>
       </div>
     </div>
   </div>
@@ -58,4 +62,4 @@
   </div>
 <% end %>
 
-<!-- <%= render "etudiants/shared/links" %> -->
+<!--<%= render "tuteur_universitaires/shared/links" %>-->
