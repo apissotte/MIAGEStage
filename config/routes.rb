@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get '/static', to: 'static#index'
 
   get '/evaluation', to: 'evaluations#evaluation'
+  get '/evaluation', to: 'evaluations#evaluation'
   post '/evaluation/save', to: 'evaluations#save'
   get '/evaluation/edit/(:id)', to: 'evaluations#editEvaluation'
   get '/evaluation/view/(:id)', to: 'evaluations#viewEvaluation'
