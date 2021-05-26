@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     end
   end
 
+  # Contrôleur DisponibiliteController
+  resources :disponibilites
+
   # Contrôleur FormationsController
   resources :formations
 
