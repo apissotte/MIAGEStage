@@ -4,6 +4,14 @@ Rails.application.routes.draw do
 
 
   # Routes pour Devise
+
+  match '/tuteur_universitaires/sign_up' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
+  match '/tuteur_universitaires/sign_in' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
+
+  match '/responsable_stages/sign_up' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
+  match '/responsable_stages/sign_in' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
+
+
   devise_for :etudiants, controllers: {
     registrations: "etudiants/registrations"
   }
@@ -32,7 +40,6 @@ Rails.application.routes.draw do
     # get '/sign_in', to: 'devise/sessions#new'
     get '505cccad-922c-4251-bae6-55c5f91df05b/sign_up', to: 'responsable_stages/registrations#new'
   end
-
 
 
   # Require a root to for devise
