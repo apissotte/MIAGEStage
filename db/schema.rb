@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_25_075115) do
+ActiveRecord::Schema.define(version: 2021_05_26_011223) do
 
   create_table "aides", force: :cascade do |t|
     t.boolean "cv_recu"
@@ -25,12 +25,14 @@ ActiveRecord::Schema.define(version: 2021_05_25_075115) do
   end
 
   create_table "disponibilites", force: :cascade do |t|
+    t.integer "nb_etudiants_souhaite"
     t.string "statut_reponse"
     t.integer "tuteur_universitaire_id"
+    t.integer "formation_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "nb_etudiants_souhaite", default: 0
     t.integer "promotion_id"
+    t.index ["formation_id"], name: "index_disponibilites_on_formation_id"
     t.index ["promotion_id"], name: "index_disponibilites_on_promotion_id"
     t.index ["tuteur_universitaire_id", "promotion_id"], name: "index_disponibilites_on_tuteur_universitaire_id_and_promotion_id", unique: true
     t.index ["tuteur_universitaire_id"], name: "index_disponibilites_on_tuteur_universitaire_id"
@@ -183,7 +185,7 @@ ActiveRecord::Schema.define(version: 2021_05_25_075115) do
     t.string "sujet"
     t.date "date_ratification_convention"
     t.float "gratification"
-    t.string "type_stage"
+    t.string "type"
     t.string "commentaire"
     t.integer "etudiant_id"
     t.integer "formation_id"
@@ -195,7 +197,7 @@ ActiveRecord::Schema.define(version: 2021_05_25_075115) do
     t.index ["formation_id"], name: "index_stages_on_formation_id"
     t.index ["tuteur_entreprise_id"], name: "index_stages_on_tuteur_entreprise_id"
     t.index ["tuteur_universitaire_id"], name: "index_stages_on_tuteur_universitaire_id"
-    t.check_constraint "type_stage IN (\"STAGE\", \"ALTERNANCE\")"
+    t.check_constraint "type IN (\"STAGE\", \"ALTERNANCE\")"
   end
 
   create_table "technologies", force: :cascade do |t|
@@ -244,6 +246,7 @@ ActiveRecord::Schema.define(version: 2021_05_25_075115) do
 
   add_foreign_key "aides", "etudiants"
   add_foreign_key "aides", "formations"
+  add_foreign_key "disponibilites", "promotions"
   add_foreign_key "evaluations", "ge_formats"
   add_foreign_key "evaluations", "stages"
   add_foreign_key "fiche_stages", "etudiants"
