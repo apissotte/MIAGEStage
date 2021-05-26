@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_26_011223) do
+ActiveRecord::Schema.define(version: 2021_05_26_192328) do
 
   create_table "aides", force: :cascade do |t|
     t.boolean "cv_recu"
@@ -155,7 +155,7 @@ ActiveRecord::Schema.define(version: 2021_05_26_011223) do
 
   create_table "offres", force: :cascade do |t|
     t.string "titre"
-    t.string "type"
+    t.string "type_offre"
     t.string "lien_url"
     t.string "mention"
     t.binary "pdf"
@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 2021_05_26_011223) do
     t.integer "entreprise_id"
     t.index ["entreprise_id"], name: "index_offres_on_entreprise_id"
     t.check_constraint "mention IN (\"L3\",\"M1\", \"M2\")"
-    t.check_constraint "type IN (\"STAGE\",\"ALTERNANCE\")"
+    t.check_constraint "type_offre IN (\"STAGE\",\"ALTERNANCE\")"
   end
 
   create_table "offres_technologies", id: false, force: :cascade do |t|
@@ -181,11 +181,25 @@ ActiveRecord::Schema.define(version: 2021_05_26_011223) do
     t.check_constraint "statut IN (\"OUVERTE\", \"CLOTUREE\")"
   end
 
+  create_table "responsable_stages", force: :cascade do |t|
+    t.string "nom"
+    t.string "prenom"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_responsable_stages_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_responsable_stages_on_reset_password_token", unique: true
+  end
+
   create_table "stages", force: :cascade do |t|
     t.string "sujet"
     t.date "date_ratification_convention"
     t.float "gratification"
-    t.string "type"
+    t.string "type_stage"
     t.string "commentaire"
     t.integer "etudiant_id"
     t.integer "formation_id"
@@ -197,7 +211,7 @@ ActiveRecord::Schema.define(version: 2021_05_26_011223) do
     t.index ["formation_id"], name: "index_stages_on_formation_id"
     t.index ["tuteur_entreprise_id"], name: "index_stages_on_tuteur_entreprise_id"
     t.index ["tuteur_universitaire_id"], name: "index_stages_on_tuteur_universitaire_id"
-    t.check_constraint "type IN (\"STAGE\", \"ALTERNANCE\")"
+    t.check_constraint "type_stage IN (\"STAGE\", \"ALTERNANCE\")"
   end
 
   create_table "technologies", force: :cascade do |t|
