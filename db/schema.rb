@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 2021_05_25_125952) do
     t.string "nom"
     t.string "prenom"
     t.string "email_universitaire"
-    t.string "email_personnelle"
+    t.string "email_personnel"
     t.string "statut_arrivant_L3", limit: 5
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2021_05_25_125952) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.index ["email"], name: "index_etudiants_on_email", unique: true
-    t.index ["email_personnelle"], name: "index_etudiants_on_email_personnelle", unique: true
+    t.index ["email_personnel"], name: "index_etudiants_on_email_personnel", unique: true
     t.index ["email_universitaire"], name: "index_etudiants_on_email_universitaire", unique: true
     t.index ["num_etudiant"], name: "index_etudiants_on_num_etudiant", unique: true
     t.index ["reset_password_token"], name: "index_etudiants_on_reset_password_token", unique: true

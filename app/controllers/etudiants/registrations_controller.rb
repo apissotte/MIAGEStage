@@ -62,7 +62,7 @@ class Etudiants::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:num_etudiant, :email_universitaire, :nom, :prenom, :email_personnelle, :statut_arrivant_L3])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:num_etudiant, :email_universitaire, :nom, :prenom, :email_personnel, :statut_arrivant_L3])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
