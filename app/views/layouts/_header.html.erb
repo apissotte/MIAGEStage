@@ -23,7 +23,6 @@ Roles :
     '<li class="nav-item">
       <a class="nav-link" href="/tableaudebord"><p>TABLEAU DE BORD</p></a>
     </li>'.html_safe
-
 %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#"></a>
@@ -38,7 +37,6 @@ Roles :
       <% case role %>
       <% when 1 %>
 
-        <%= fiche %>
         <li class="nav-item">
           <a class="nav-link" href="<%= fiche_stages_path %>"><p>FICHE STAGE</p></a>
         </li>
@@ -69,17 +67,17 @@ Roles :
       <% when 3 %>
 
         <%= evaluation %>
+        <li class="nav-item">
+          <select class="dropdown dropdownNavBar" onChange="window.location.href=this.value" style="margin-left: 15px;margin-right: 15px;">
+            <option disabled selected><%= fa_icon "user", class: "fa-2x text-purple" %>NOM Prénom</option>
+            <option value="./">Gestion du compte</option>
+            <option value="./">Déconnexion</option>
+          </select>
+          </a>
+        </li>
 
       <% end %>
 
-      <li class="nav-item">
-        <select class="dropdown dropdownNavBar" onChange="window.location.href=this.value" style="margin-left: 15px;margin-right: 15px;">
-          <option disabled selected><%= fa_icon "user", class: "fa-2x text-purple" %>NOM Prénom</option>
-          <option value="./">Gestion du compte</option>
-          <option value="./">Déconnexion</option>
-        </select>
-        </a>
-      </li>
     </ul>
   </div>
 
