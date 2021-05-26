@@ -1,5 +1,6 @@
-<h1>Fiches de stage</h1>
-
+<div class="bandeauSuperieur d-flex justify-content-center">
+  <span class="mx-4 uppercase font-bold">Fiches de stage</span>
+</div>
 <ul>
   <% @fichestage.each do |fichestage| %>
     <li>
@@ -16,4 +17,6 @@
 <% end %>
 
 <br/><br/>
-<%= link_to "Nouvelle fiche de stage", new_fiche_stage_path %>
+<div class="d-flex justify-content-center m-2 pt-5">
+  <button class="btn btn-square btn-sm mx-3"><%= link_to "Nouvelle fiche de stage", new_fiche_stage_path %></button>
+</div>
