@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     end
   end
 
-  # Contrôleur FormationsController
+  # Contrôleur FormationsControlle r
   resources :formations
 
   # Contrôleur EntreprisesController
