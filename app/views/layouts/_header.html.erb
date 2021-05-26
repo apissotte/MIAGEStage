@@ -23,6 +23,15 @@ Roles :
     '<li class="nav-item">
       <a class="nav-link" href="/tableaudebord"><p>TABLEAU DE BORD</p></a>
     </li>'.html_safe
+  conn =
+    '        <li class="nav-item">
+          <select class="dropdown dropdownNavBar" onChange="window.location.href=this.value" style="margin-left: 15px;margin-right: 15px;">
+            <option disabled selected>NOM Prénom</option>
+<option value="./">Gestion du compte</option>
+<option value="./">Déconnexion</option>
+</select>
+</a>
+</li>'.html_safe
 %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#"></a>
@@ -58,15 +67,12 @@ Roles :
             <option class="dropdown-item" value="/menurespstage">GRILLE D'EVALUATION</option>
           </select>
         </li>
+        <%= conn %>
 
       <% when 2 %>
 
         <%= tableaudebord %>
         <%= evolution %>
-
-      <% when 3 %>
-
-        <%= evaluation %>
         <li class="nav-item">
           <select class="dropdown dropdownNavBar" onChange="window.location.href=this.value" style="margin-left: 15px;margin-right: 15px;">
             <option disabled selected><%= fa_icon "user", class: "fa-2x text-purple" %>NOM Prénom</option>
@@ -75,6 +81,20 @@ Roles :
           </select>
           </a>
         </li>
+        <%= conn %>
+
+      <% when 3 %>
+
+        <%= evaluation %>
+        <li class="nav-item">
+          <select class="dropdown dropdownNavBar" onChange="window.location.href=this.value" style="margin-left: 15px;margin-right: 15px;">
+            <option disabled selected><%= fa_icon "user", class: "fa-2x text-purple" %>NOM Prénom</option>
+            <option value="/">Gestion du compte</option>
+            <option value="/">Déconnexion</option>
+          </select>
+          </a>
+        </li>
+        <%= conn %>
 
       <% end %>
 
