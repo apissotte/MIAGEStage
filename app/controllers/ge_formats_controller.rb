@@ -11,14 +11,18 @@ class GeFormatsController < ApplicationController
   end
 
   def show
-    @ge_id = params[:id]
-    @ge_formats = if GeFormats.exists?(params[:id])
-                    JSON.parse GeFormats.find(params[:id]).contenu.to_s
+    if !responsable_stage_signed_in?
+      redirect_to("/")
     else
-      @ge_id = "new"
-      JSON.parse '{"sections":[]}'
-                  end
-    @ge_ids = GeFormats.ids
+      @ge_id = params[:id]
+      @ge_formats = if GeFormats.exists?(params[:id])
+                      JSON.parse GeFormats.find(params[:id]).contenu.to_s
+                    else
+                      @ge_id = "new"
+                      JSON.parse '{"sections":[]}'
+                    end
+      @ge_ids = GeFormats.ids
+    end
   end
 
   def create

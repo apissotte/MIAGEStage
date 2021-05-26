@@ -11,14 +11,18 @@ class NotationFormatsController < ApplicationController
   end
 
   def show
-    @notation_id = params[:id]
-    @notation_formats = if NotationFormats.exists?(params[:id])
-                    JSON.parse NotationFormats.find(params[:id]).contenu.to_s
-                  else
-                    @notation_id = "new"
-                    JSON.parse '{"bareme":[]}'
-                  end
-    @notation_ids = NotationFormats.ids
+    if !responsable_stage_signed_in?
+      redirect_to("/")
+    else
+      @notation_id = params[:id]
+      @notation_formats = if NotationFormats.exists?(params[:id])
+                            JSON.parse NotationFormats.find(params[:id]).contenu.to_s
+                          else
+                            @notation_id = "new"
+                            JSON.parse '{"bareme":[]}'
+                          end
+      @notation_ids = NotationFormats.ids
+    end
   end
 
   def create

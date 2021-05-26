@@ -1,36 +1,40 @@
 class TableEtudiantController < ApplicationController
   def tableEtudiant
-    auto = -1
-    final = -1
-    note = -1
-    mention = -1
-    url = request.original_url
-    if url.include? "auto=" then
-      uri    = URI.parse(url)
-      params = CGI.parse(uri.query)
-      auto = params['auto'][0].to_s
-    end
 
-    if url.include? "final=" then
-      uri    = URI.parse(url)
-      params = CGI.parse(uri.query)
-      final = params['final'][0].to_s
-    end
+    if !tuteur_universitaire_signed_in? && !responsable_stage_signed_in?
+      redirect_to("/")
+    else
+      auto = -1
+      final = -1
+      note = -1
+      mention = -1
+      url = request.original_url
+      if url.include? "auto=" then
+        uri    = URI.parse(url)
+        params = CGI.parse(uri.query)
+        auto = params['auto'][0].to_s
+      end
 
-    if url.include? "mention=" then
-      uri    = URI.parse(url)
-      params = CGI.parse(uri.query)
-      mention = params['mention'][0].to_s
-    end
+      if url.include? "final=" then
+        uri    = URI.parse(url)
+        params = CGI.parse(uri.query)
+        final = params['final'][0].to_s
+      end
 
-    if url.include? "note=" then
-      uri    = URI.parse(url)
-      params = CGI.parse(uri.query)
-      note = params['note'][0].to_s
-    end
+      if url.include? "mention=" then
+        uri    = URI.parse(url)
+        params = CGI.parse(uri.query)
+        mention = params['mention'][0].to_s
+      end
 
-    if(auto != -1 || final != -1 )
-      sqletudiants = "SELECT stages.id, etudiants.nom, etudiants.prenom,
+      if url.include? "note=" then
+        uri    = URI.parse(url)
+        params = CGI.parse(uri.query)
+        note = params['note'][0].to_s
+      end
+
+      if(auto != -1 || final != -1 )
+        sqletudiants = "SELECT stages.id, etudiants.nom, etudiants.prenom,
         etudiants.email_universitaire, etudiants.email_personnelle,
         tuteur_universitaires.nom as nomTuteur, tuteur_universitaires.prenom as prenomTuteur,
         tuteur_universitaires.email, mention, raison_sociale
@@ -61,9 +65,9 @@ class TableEtudiantController < ApplicationController
           sqletudiants += " AND mention = '"+mention+"'"
         end
 
-    else
-      if (note != -1)
-        sqletudiants = "SELECT stages.id, etudiants.nom, etudiants.prenom,
+      else
+        if (note != -1)
+          sqletudiants = "SELECT stages.id, etudiants.nom, etudiants.prenom,
         etudiants.email_universitaire, etudiants.email_personnelle,
         tuteur_universitaires.nom as nomTuteur, tuteur_universitaires.prenom as prenomTuteur,
         tuteur_universitaires.email, mention, raison_sociale
@@ -80,15 +84,15 @@ class TableEtudiantController < ApplicationController
         AND formations.promotion_id = promotions.id
         AND rempli = 1
         AND promotions.id = (SELECT MAX(promotions.id) FROM promotions) "
-        if mention != -1
-          sqletudiants += " AND mention = '"+mention+"'"
-        end
-        sqletudiants += ") AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"
-        if mention != -1
-          sqletudiants += " AND mention = '"+mention+"'"
-        end
-      else
-        sqletudiants = "SELECT stages.id, etudiants.nom, etudiants.prenom,
+          if mention != -1
+            sqletudiants += " AND mention = '"+mention+"'"
+          end
+          sqletudiants += ") AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"
+          if mention != -1
+            sqletudiants += " AND mention = '"+mention+"'"
+          end
+        else
+          sqletudiants = "SELECT stages.id, etudiants.nom, etudiants.prenom,
         etudiants.email_universitaire, etudiants.email_personnelle,
         tuteur_universitaires.nom as nomTuteur, tuteur_universitaires.prenom as prenomTuteur,
         tuteur_universitaires.email, mention, raison_sociale
@@ -100,10 +104,12 @@ class TableEtudiantController < ApplicationController
         AND entreprises.id = stages.entreprise_id
         AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)
         GROUP BY stages.id"
+        end
       end
+
+      @etudiants = ActiveRecord::Base.connection.execute(sqletudiants)
+
     end
 
-    @etudiants = ActiveRecord::Base.connection.execute(sqletudiants)
-    puts(@etudiants)
   end
 end

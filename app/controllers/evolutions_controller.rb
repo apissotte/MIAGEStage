@@ -2,43 +2,46 @@ class EvolutionsController < ApplicationController
   def evolution
     require 'json'
 
-    idTuteur = 1
-
-    @enteteTab = []
-    @nbEntete = 0
-
-    @filtre = 'tout'
-    url = request.original_url
-    if url.include? "filtre=" then
-      uri    = URI.parse(url)
-      params = CGI.parse(uri.query)
-      @filtre = params['filtre'][0].to_s
-    end
-
-    if @filtre == 'tout' then
-      sqlevol = "SELECT stages.id, sujet, type_stage, nom, prenom, mention, raison_sociale " +
-        " FROM stages, formations, promotions, etudiants, entreprises " +
-        " WHERE tuteur_universitaire_id == " + idTuteur.to_s +
-        " AND stages.formation_id = formations.id" +
-        " AND formations.promotion_id = promotions.id" +
-        " AND stages.etudiant_id = etudiants.id" +
-        " AND stages.entreprise_id = entreprises.id " +
-        " AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"
+    if !tuteur_universitaire_signed_in?
+      redirect_to("/")
     else
-      sqlevol = "SELECT stages.id, sujet, raison_sociale, nom, prenom, mention, raison_sociale " +
-        " FROM stages, formations, promotions, etudiants, entreprises " +
-        " WHERE tuteur_universitaire_id == " + idTuteur.to_s +
-        " AND stages.formation_id = formations.id" +
-        " AND formations.promotion_id = promotions.id" +
-        " AND stages.etudiant_id = etudiants.id" +
-        " AND stages.entreprise_id = entreprises.id " +
-        " AND formations.mention = '" + @filtre + "'" +
-        " AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"
-    end
-    evolutions = ActiveRecord::Base.connection.execute(sqlevol)
-    i=0
-    text = '{"etudiants":['
-    evolutions.each do |evol|
+      idTuteur = current_tuteur_universitaire.id
+
+      @enteteTab = []
+      @nbEntete = 0
+
+      @filtre = 'tout'
+      url = request.original_url
+      if url.include? "filtre=" then
+        uri    = URI.parse(url)
+        params = CGI.parse(uri.query)
+        @filtre = params['filtre'][0].to_s
+      end
+
+      if @filtre == 'tout' then
+        sqlevol = "SELECT stages.id, sujet, type_stage, nom, prenom, mention, raison_sociale " +
+          " FROM stages, formations, promotions, etudiants, entreprises " +
+          " WHERE tuteur_universitaire_id == " + idTuteur.to_s +
+          " AND stages.formation_id = formations.id" +
+          " AND formations.promotion_id = promotions.id" +
+          " AND stages.etudiant_id = etudiants.id" +
+          " AND stages.entreprise_id = entreprises.id " +
+          " AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"
+      else
+        sqlevol = "SELECT stages.id, sujet, raison_sociale, nom, prenom, mention, raison_sociale " +
+          " FROM stages, formations, promotions, etudiants, entreprises " +
+          " WHERE tuteur_universitaire_id == " + idTuteur.to_s +
+          " AND stages.formation_id = formations.id" +
+          " AND formations.promotion_id = promotions.id" +
+          " AND stages.etudiant_id = etudiants.id" +
+          " AND stages.entreprise_id = entreprises.id " +
+          " AND formations.mention = '" + @filtre + "'" +
+          " AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"
+      end
+      evolutions = ActiveRecord::Base.connection.execute(sqlevol)
+      i=0
+      text = '{"etudiants":['
+      evolutions.each do |evol|
 
         if(i>0)
           text += ','
@@ -46,11 +49,11 @@ class EvolutionsController < ApplicationController
         text += '{"nom": "'+evol['nom']+ ' '+evol['prenom'] +'","promotion": "'+evol['mention']+'", "entreprise": "'+evol['raison_sociale']+'"'
 
         sqlgrille = "select contenu"+
-                    " from evaluations"+
-                    " WHERE stage_id = " +evol['id'].to_s +
-                    " AND auto_evaluation = 0"+
-                    " AND finale =0"+
-                    " AND rempli =1"
+          " from evaluations"+
+          " WHERE stage_id = " +evol['id'].to_s +
+          " AND auto_evaluation = 0"+
+          " AND finale =0"+
+          " AND rempli =1"
         grilleExe = ActiveRecord::Base.connection.execute(sqlgrille)
         grille = '{}'
         if grilleExe.present?
@@ -95,25 +98,26 @@ class EvolutionsController < ApplicationController
         text += '}]}'
 
         i += 1
-    end
-    text += ']}'
-
-    if @nbEntete == 0 then
-      sqlFormatGrille = "select contenu"+
-        " FROM ge_formats"+
-        " WHERE id = (select MAX(id) FROM ge_formats)"
-      formatGrille = ActiveRecord::Base.connection.execute(sqlFormatGrille)
-
-      jsonGrille = JSON.parse(formatGrille[0]['contenu'])
-      sections = jsonGrille['sections']
-
-      sections.each do |section|
-        @enteteTab.append(section['titre'])
-        @nbEntete += 1
       end
-    end
+      text += ']}'
 
-    @data = JSON.parse(text)
+      if @nbEntete == 0 then
+        sqlFormatGrille = "select contenu"+
+          " FROM ge_formats"+
+          " WHERE id = (select MAX(id) FROM ge_formats)"
+        formatGrille = ActiveRecord::Base.connection.execute(sqlFormatGrille)
+
+        jsonGrille = JSON.parse(formatGrille[0]['contenu'])
+        sections = jsonGrille['sections']
+
+        sections.each do |section|
+          @enteteTab.append(section['titre'])
+          @nbEntete += 1
+        end
+      end
+
+      @data = JSON.parse(text)
+    end
   end
 
 
