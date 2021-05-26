@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/', to: 'pages#home'
   get '/static', to: 'static#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
@@ -34,4 +35,5 @@ Rails.application.routes.draw do
   get '/statistiques', to: 'statistiques#statistiques'
   get '/tableEtudiant', to: 'table_etudiant#tableEtudiant'
   resources :ge_formats
+  resources :notation_formats
 end

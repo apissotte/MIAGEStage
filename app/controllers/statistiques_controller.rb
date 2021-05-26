@@ -110,6 +110,7 @@ class StatistiquesController < ApplicationController
         FROM stages, etudiants, notations, formations, promotions
         WHERE stages.etudiant_id = etudiants.id
         AND stages.formation_id = formations.id
+        AND notations.rempli = 1
         AND formations.promotion_id = promotions.id
         AND notations.stage_id = stages.id
         AND notations.notation_format_id = " + maxversion["ver"].to_s
@@ -118,6 +119,7 @@ class StatistiquesController < ApplicationController
         FROM stages, etudiants, notations, formations, promotions
         WHERE stages.etudiant_id = etudiants.id
         AND stages.formation_id = formations.id
+        AND notations.rempli = 1
         AND formations.promotion_id = promotions.id
         AND notations.stage_id = stages.id	"+
             " AND formations.mention = '" + @filtre + "'
