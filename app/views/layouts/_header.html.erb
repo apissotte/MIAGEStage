@@ -23,10 +23,6 @@ Roles :
     '<li class="nav-item">
       <a class="nav-link" href="/tableaudebord"><p>TABLEAU DE BORD</p></a>
     </li>'.html_safe
-  fiche =
-    '<li class="nav-item">
-      <a class="nav-link" href="#"><p>FICHE STAGE</p></a>
-    </li>'.html_safe
 
 %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -43,13 +39,16 @@ Roles :
       <% when 1 %>
 
         <%= fiche %>
+        <li class="nav-item">
+          <a class="nav-link" href="<%= fiche_stages_path %>"><p>FICHE STAGE</p></a>
+        </li>
         <li class="nav-item" style="margin-right: 15px">
           <select class="dropdown dropdownNavBar" onChange="window.location.href=this.value" >
             <option selected disabled class="dropdown-item" value="">LISTES</option>
-            <option class="dropdown-item" value="/promotions">PROMOTIONS</option>
-            <option class="dropdown-item" value="#">ETUDIANTS</option>
-            <option class="dropdown-item" value="#">ENTREPRISES</option>
-            <option class="dropdown-item" value="#">TUTEURS</option>
+            <option class="dropdown-item" value="<%= promotions_path %>">PROMOTIONS</option>
+            <option class="dropdown-item" value="<%= etudiants_path   %>">ETUDIANTS</option>
+            <option class="dropdown-item" value="<%= entreprises_path  %>">ENTREPRISES</option>
+            <option class="dropdown-item" value="<%= tuteur_universitaires_path %>">TUTEURS</option>
           </select>
         </li>
         <li class="nav-item">
