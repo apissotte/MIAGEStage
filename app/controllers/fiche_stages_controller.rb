@@ -16,6 +16,7 @@ class FicheStagesController < ApplicationController
   def create
     @fichestage = FicheStage.new(fiche_stage_params)
     @fichestage.statut = "BROUILLON"
+    @fichestage.etudiant_id = current_etudiant.id
 
     if @fichestage.save
       redirect_to @fichestage
@@ -27,6 +28,7 @@ class FicheStagesController < ApplicationController
   def csend
     @fichestage = FicheStage.new(fiche_stage_params)
     @fichestage.statut = "EN_ATTENTE_DE_VALIDATION"
+    @fichestage.etudiant_id = current_etudiant.id
 
     if @fichestage.save
       redirect_to @fichestage
