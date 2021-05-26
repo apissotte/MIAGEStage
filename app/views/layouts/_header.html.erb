@@ -71,8 +71,8 @@ Roles :
                 <option class="dropdown-item" value="/menurespstage">GRILLE D'EVALUATION</option>
               </select>
             </li>
-            <p style="margin-right: 15px; margin-left: 15px"> <%= link_to 'Edition profil', responsable_stage_registration_path, :class => 'navbar-link' %></p>
-            <p style="margin-right: 15px"><%= link_to "Deconnexion", responsable_stage_session_path, method: :delete, :class => 'navbar-link' %></p>
+            <p style="margin-right: 15px; margin-left: 15px"> <%= link_to 'Edition profil', edit_responsable_stage_registration_path, :class => 'navbar-link' %></p>
+            <p style="margin-right: 15px"><%= link_to "Deconnexion", destroy_responsable_stage_session_path, method: :delete, :class => 'navbar-link' %></p>
           <% end %>
         <% end %>
       <% end %>
