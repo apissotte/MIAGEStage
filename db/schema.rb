@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_160203) do
+ActiveRecord::Schema.define(version: 2021_05_21_093500) do
 
   create_table "aides", force: :cascade do |t|
     t.boolean "cv_recu"
@@ -25,13 +25,14 @@ ActiveRecord::Schema.define(version: 2021_05_18_160203) do
   end
 
   create_table "disponibilites", force: :cascade do |t|
-    t.integer "nb_etudiants_souhaite"
     t.string "statut_reponse"
     t.integer "tuteur_universitaire_id"
-    t.integer "formation_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["formation_id"], name: "index_disponibilites_on_formation_id"
+    t.integer "nb_etudiants_souhaite", default: 0
+    t.integer "promotion_id"
+    t.index ["promotion_id"], name: "index_disponibilites_on_promotion_id"
+    t.index ["tuteur_universitaire_id", "promotion_id"], name: "index_disponibilites_on_tuteur_universitaire_id_and_promotion_id", unique: true
     t.index ["tuteur_universitaire_id"], name: "index_disponibilites_on_tuteur_universitaire_id"
     t.check_constraint "statut_reponse IN (\"OK\",\"ABANDON\",\"PAS_DE_REPONSE\")"
   end
@@ -42,6 +43,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_160203) do
     t.string "ville"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "pays", default: "France"
     t.index ["siren"], name: "index_entreprises_on_siren", unique: true
   end
 
@@ -50,13 +52,20 @@ ActiveRecord::Schema.define(version: 2021_05_18_160203) do
     t.string "nom"
     t.string "prenom"
     t.string "email_universitaire"
-    t.string "email_personnelle"
+    t.string "email_personnel"
     t.string "statut_arrivant_L3", limit: 5
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["email_personnelle"], name: "index_etudiants_on_email_personnelle", unique: true
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_etudiants_on_email", unique: true
+    t.index ["email_personnel"], name: "index_etudiants_on_email_personnel", unique: true
     t.index ["email_universitaire"], name: "index_etudiants_on_email_universitaire", unique: true
     t.index ["num_etudiant"], name: "index_etudiants_on_num_etudiant", unique: true
+    t.index ["reset_password_token"], name: "index_etudiants_on_reset_password_token", unique: true
     t.check_constraint "statut_arrivant_L3 IN (\"DSPEG\", \"MIAGE\")"
   end
 
@@ -149,7 +158,9 @@ ActiveRecord::Schema.define(version: 2021_05_18_160203) do
 
   create_table "promotions", force: :cascade do |t|
     t.string "annee", limit: 4
+    t.string "statut"
     t.index ["annee"], name: "index_promotions_on_annee", unique: true
+    t.check_constraint "statut IN (\"OUVERTE\", \"CLOTUREE\")"
   end
 
   create_table "stages", force: :cascade do |t|
@@ -197,6 +208,12 @@ ActiveRecord::Schema.define(version: 2021_05_18_160203) do
     t.string "localisation"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_tuteur_universitaires_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_tuteur_universitaires_on_reset_password_token", unique: true
     t.check_constraint "statut_encadrant IN (\"INDUSTRIE\", \"UNIVERSITAIRE\")"
   end
 
