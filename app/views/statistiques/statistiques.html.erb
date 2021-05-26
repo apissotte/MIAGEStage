@@ -228,11 +228,10 @@
               <span>Légende : </span>
             </div>
             <div class="ml-5 pl-3">
-              • A : Stage excellent où les résultats dépassent les objectifs assignés<br>
-              • B : Stage de bonne qualité, les objectifs ont été atteints et les résultats sont  utiles à l’entreprise<br>
-              • C : Stage moyen, sans reproche particulier à faire à l’étudiant<br>
-              • D : Aucun véritable problème ne s’est manifesté mais les résultats  escomptés n’ont pas été atteints<br>
-              • E : Un stage dans lequel des problèmes se sont manifestés du fait de l’étudiant<br>
+              <% @legend.each do |data| %>
+                <%= "• " + data["valeur"] + " : " + data["libelle"] %>
+                <br>
+              <% end %>
             </div>
           </div>
         </div>

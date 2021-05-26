@@ -142,6 +142,8 @@ class StatistiquesController < ApplicationController
       dic.each do |key, value|
         @data.push([key, value]);
       end
+
+      @legend = (JSON.parse NotationFormats.last.contenu.to_s)["bareme"]
     end
   end
 end

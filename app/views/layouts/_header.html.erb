@@ -16,28 +16,28 @@ Roles :
     </li>'.html_safe
   evaluation =
     '<li class="nav-item">
-      <a class="nav-link" href="menuetudiant"><p>EVALUATION</p></a>
+      <a class="nav-link" href="/menuetudiant"><p>EVALUATION</p></a>
     </li>'.html_safe
   statistiques =
     '<li class="nav-item">
-      <a class="nav-link" href="statistiques"><p>STATISTIQUES</p></a>
+      <a class="nav-link" href="/statistiques"><p>STATISTIQUES</p></a>
     </li>'.html_safe
   evolution =
     '<li class="nav-item">
-      <a class="nav-link" href="evolution"><p>EVOLUTION</p></a>
+      <a class="nav-link" href="/evolution"><p>EVOLUTION</p></a>
     </li>'.html_safe
   tableaudebord =
     '<li class="nav-item">
-      <a class="nav-link" href="tableaudebord"><p>TABLEAU DE BORD</p></a>
+      <a class="nav-link" href="/tableaudebord"><p>TABLEAU DE BORD</p></a>
     </li>'.html_safe
   grilleevaluation =
     '<li class="nav-item">
-      <a class="nav-link" href="menurespstage"><p>GRILLE D\'EVALUATION</p></a>
+      <a class="nav-link" href="/menurespstage"><p>GRILLE D\'EVALUATION</p></a>
     </li>'.html_safe
 %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#"></a>
-  <img class="logo" style="margin-left: 10px;" <%= image_tag(image_url('miage.png'), class: 'image') %>
+  <a href="/"><img class="logo" style="margin-left: 10px; margin-top:-15px;" <%= image_tag(image_url('miage.png'), class: 'image') %></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="margin-right: 10px;">
     <span class="navbar-toggler-icon"></span>
   </button>
