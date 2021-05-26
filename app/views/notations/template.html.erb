@@ -31,7 +31,7 @@
         <div class="sous-titre">
           <span class="uppercase font-bold text-darkgrey">Note de l'entreprise</span>
         </div>
-
+        <% if @jsonGrille.length > 0 %>
         <table class="table">
           <thead>
             <tr>
@@ -63,7 +63,7 @@
             </tr>
           </tbody>
         </table>
-
+        <% end %>
       </div>
     </div>
 

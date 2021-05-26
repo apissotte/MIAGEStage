@@ -142,11 +142,15 @@ class StatistiquesController < ApplicationController
 
         end
         @data = []
-        dic.each do |key, value|
-          @data.push([key, value]);
+        @legend = []
+        if dic.present?
+          dic.each do |key, value|
+            @data.push([key, value]);
+          end
+
+          @legend = (JSON.parse NotationFormats.last.contenu.to_s)["bareme"]
         end
 
-        @legend = (JSON.parse NotationFormats.last.contenu.to_s)["bareme"]
       end
     end
 

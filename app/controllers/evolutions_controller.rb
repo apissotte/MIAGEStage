@@ -2,10 +2,16 @@ class EvolutionsController < ApplicationController
   def evolution
     require 'json'
 
-    if !tuteur_universitaire_signed_in?
+    if !tuteur_universitaire_signed_in? && !responsable_stage_signed_in?
       redirect_to("/")
     else
-      idTuteur = current_tuteur_universitaire.id
+      if tuteur_universitaire_signed_in?
+        idTuteur = current_tuteur_universitaire.id
+      else
+        if responsable_stage_signed_in?
+          idTuteur = current_responsable_stage.id
+        end
+      end
 
       @enteteTab = []
       @nbEntete = 0
@@ -19,24 +25,45 @@ class EvolutionsController < ApplicationController
       end
 
       if @filtre == 'tout' then
-        sqlevol = "SELECT stages.id, sujet, type_stage, nom, prenom, mention, raison_sociale " +
-          " FROM stages, formations, promotions, etudiants, entreprises " +
-          " WHERE tuteur_universitaire_id == " + idTuteur.to_s +
-          " AND stages.formation_id = formations.id" +
-          " AND formations.promotion_id = promotions.id" +
-          " AND stages.etudiant_id = etudiants.id" +
-          " AND stages.entreprise_id = entreprises.id " +
-          " AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"
+        if tuteur_universitaire_signed_in? then
+          sqlevol = "SELECT stages.id, sujet, type_stage, nom, prenom, mention, raison_sociale " +
+            " FROM stages, formations, promotions, etudiants, entreprises " +
+            " WHERE tuteur_universitaire_id == " + idTuteur.to_s +
+            " AND stages.formation_id = formations.id" +
+            " AND formations.promotion_id = promotions.id" +
+            " AND stages.etudiant_id = etudiants.id" +
+            " AND stages.entreprise_id = entreprises.id " +
+            " AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"
+        else
+          sqlevol = "SELECT stages.id, sujet, type_stage, nom, prenom, mention, raison_sociale " +
+            " FROM stages, formations, promotions, etudiants, entreprises " +
+            " WHERE stages.formation_id = formations.id" +
+            " AND formations.promotion_id = promotions.id" +
+            " AND stages.etudiant_id = etudiants.id" +
+            " AND stages.entreprise_id = entreprises.id " +
+            " AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"
+        end
       else
-        sqlevol = "SELECT stages.id, sujet, raison_sociale, nom, prenom, mention, raison_sociale " +
-          " FROM stages, formations, promotions, etudiants, entreprises " +
-          " WHERE tuteur_universitaire_id == " + idTuteur.to_s +
-          " AND stages.formation_id = formations.id" +
-          " AND formations.promotion_id = promotions.id" +
-          " AND stages.etudiant_id = etudiants.id" +
-          " AND stages.entreprise_id = entreprises.id " +
-          " AND formations.mention = '" + @filtre + "'" +
-          " AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"
+        if tuteur_universitaire_signed_in? then
+          sqlevol = "SELECT stages.id, sujet, raison_sociale, nom, prenom, mention, raison_sociale " +
+            " FROM stages, formations, promotions, etudiants, entreprises " +
+            " WHERE tuteur_universitaire_id == " + idTuteur.to_s +
+            " AND stages.formation_id = formations.id" +
+            " AND formations.promotion_id = promotions.id" +
+            " AND stages.etudiant_id = etudiants.id" +
+            " AND stages.entreprise_id = entreprises.id " +
+            " AND formations.mention = '" + @filtre + "'" +
+            " AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"
+        else
+          sqlevol = "SELECT stages.id, sujet, raison_sociale, nom, prenom, mention, raison_sociale " +
+            " FROM stages, formations, promotions, etudiants, entreprises " +
+            " WHERE stages.formation_id = formations.id" +
+            " AND formations.promotion_id = promotions.id" +
+            " AND stages.etudiant_id = etudiants.id" +
+            " AND stages.entreprise_id = entreprises.id " +
+            " AND formations.mention = '" + @filtre + "'" +
+            " AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"
+        end
       end
       evolutions = ActiveRecord::Base.connection.execute(sqlevol)
       i=0
@@ -106,14 +133,16 @@ class EvolutionsController < ApplicationController
           " FROM ge_formats"+
           " WHERE id = (select MAX(id) FROM ge_formats)"
         formatGrille = ActiveRecord::Base.connection.execute(sqlFormatGrille)
+        if formatGrille.present?
+          jsonGrille = JSON.parse(formatGrille[0]['contenu'])
+          sections = jsonGrille['sections']
 
-        jsonGrille = JSON.parse(formatGrille[0]['contenu'])
-        sections = jsonGrille['sections']
-
-        sections.each do |section|
-          @enteteTab.append(section['titre'])
-          @nbEntete += 1
+          sections.each do |section|
+            @enteteTab.append(section['titre'])
+            @nbEntete += 1
+          end
         end
+
       end
 
       @data = JSON.parse(text)
