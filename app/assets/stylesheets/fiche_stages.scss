@@ -47,6 +47,17 @@ h2 {
   max-width: 100% !important;
 }
 
-.btn-end {
-  //text-align: end;
+.reado input, .reado select, .reado textarea {
+  pointer-events: none;
+}
+
+.reado input[type=submit] {
+  background-color: #CCCCCC !important;
+}
+
+.noreado textarea, .noreado input {
+  pointer-events: initial;
+}
+.noreado input[type=submit] {
+  background-color: #8B0146 !important;
 }

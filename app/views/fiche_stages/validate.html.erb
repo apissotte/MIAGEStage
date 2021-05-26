@@ -14,7 +14,7 @@
 
 <div class="content">
   <%= form_with model: @fichestage do |form| %>
-    <div class="row">
+    <div class="row reado">
       <div class="col-6 vertical-line">
 
         <div class="row">
@@ -176,14 +176,13 @@
         <div class="row">
           <div class="col-2"></div>
           <div class="col-8">
-            <% unless @fichestage.errors.full_messages.blank? %>
-              <h2> Erreurs sur le formulaire</h2>
-              <%= @fichestage.errors.full_messages %>
-            <% end %>
-            <% unless @fichestage.commentaire_validation.nil? %>
-              <h2> Modifications sur le formulaire</h2>
-              <%= @fichestage.commentaire_validation %>
-            <% end %>
+            <h2>Commentaires de validation</h2>
+            <div>
+              <div class="full-field noreado">
+                <%= form.label :commentaire_validation, "Commentaires de validation" %><br>
+                <%= form.text_area :commentaire_validation %>
+              </div>
+            </div>
           </div>
           <div class="col-2"></div>
         </div>
@@ -192,11 +191,11 @@
           <div class="col-1"></div>
           <div class="col-10">
             <div class="row">
-              <div class="col-4">
-                <%= form.submit "Modifier", formaction: fiche_stage_path(@fichestage), class: "btn btn-primary btn-round" %>
+              <div class="col-4 noreado">
+                <%= form.submit "Valider", formaction: fiche_stages_vyes_path(@fichestage), class: "btn btn-primary btn-round" %>
               </div>
-              <div class="col-4">
-                <%= form.submit "Envoyer", formaction: fiche_stages_usend_path(@fichestage), class: "btn btn-primary btn-round" %>
+              <div class="col-4 noreado">
+                <%= form.submit "Refuser", formaction: fiche_stages_vno_path(@fichestage), class: "btn btn-primary btn-round" %>
               </div>
               <div class="col-4 btn-end">
                 <%= link_to "Annuler", :back, class: "btn btn-primary btn-round" %>

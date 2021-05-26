@@ -66,13 +66,35 @@ class FicheStagesController < ApplicationController
     @fichestage = FicheStage.find(params[:id])
   end
 
+  def vyes
+    @fichestage = FicheStage.find(params[:id])
+    @fichestage.statut = "VALIDEE"
+
+    if @fichestage.update(fiche_stage_params)
+      redirect_to @fichestage
+    else
+      render :validate
+    end
+  end
+
+  def vno
+    @fichestage = FicheStage.find(params[:id])
+    @fichestage.statut = "REFUSEE"
+
+    if @fichestage.update(fiche_stage_params)
+      redirect_to @fichestage
+    else
+      render :validate
+    end
+  end
+
   private
   def fiche_stage_params
     params.require(:fiche_stage).permit(
       :titre, :type_stage, :mention, :date_debut, :date_fin,
       :poste, :taches, :technologies, :contact_nom, :contact_prenom, :contact_poste,
       :tuteur_nom, :tuteur_prenom, :tuteur_fonction, :tuteur_telephone, :tuteur_email,
-      :entreprise_nom, :entreprise_siren, :entreprise_cp, :entreprise_ville, :entreprise_pays)
+      :entreprise_nom, :entreprise_siren, :entreprise_cp, :entreprise_ville, :entreprise_pays, :commentaire_validation)
   end
 
   def destroy
