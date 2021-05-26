@@ -1,7 +1,7 @@
 <div class="bandeauSuperieur d-flex justify-content-center">
   <span class="mx-4 uppercase font-bold">Etudiants</span>
 </div>
-<div class="d-flex justify-content-end mb-4">
+<div class="d-flex justify-content-end mb-4 mr-4">
   <%= link_to new_etudiant_path, remote: true, class: 'btn btn-outline-secondary',
               data: { "bs-toggle": 'modal', "bs-target": '#newEtudiantModal' } do %>
     <%= fa_icon "plus", class: "fa-lg me-1" %> Nouvel étudiant

@@ -1,13 +1,12 @@
+<div class="bandeauSuperieur d-flex justify-content-center">
+  <span class="mx-4 uppercase font-bold">Informations sur <%= @tuteur_universitaire.nom %> <%= @tuteur_universitaire.prenom %></span>
+</div>
+
+<div class="d-flex justify-content-end mb-4 mr-4">
+  <%= link_to "Revenir à la liste des tuteurs", tuteur_universitaires_path, class: "btn btn-outline-secondary" %>
+</div>
+
 <div class="container">
-  <h1>Informations sur <%= @tuteur_universitaire.nom %> <%= @tuteur_universitaire.prenom %></h1>
-
-
-  <div class="row mb-3">
-    <div class="col text-right">
-      <%= link_to "Revenir à la liste des tuteurs", tuteur_universitaires_path, class: "btn btn-secondary" %>
-    </div>
-  </div>
-
   <div class="row mb-3">
     <div class="col">
       <label>Alias :</label> <%= @tuteur_universitaire.alias %>
