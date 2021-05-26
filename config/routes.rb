@@ -50,6 +50,9 @@ Rails.application.routes.draw do
 
   resources :etudiants
 
+  # Contrôleur DisponibiliteController
+  resources :disponibilites
+
   # Contrôleur StaticController
   get '/static', to: 'static#index'
 
