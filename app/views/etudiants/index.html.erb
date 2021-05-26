@@ -34,7 +34,9 @@
         <%= e.prenom  %>
       </td>
       <td>
-        <%= e.formations.last.libelle %>
+        <% if e.formations.present? %>
+          <%= e.formations.last.libelle %>
+        <% end %>
       </td>
       <td>
         <%= e.email_universitaire  %>

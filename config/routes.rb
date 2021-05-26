@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     registrations: "etudiants/registrations"
   }
   devise_scope :etudiant do
+    get '/sign_in', to: 'devise/sessions#new'
     get '4d6a8d14-ef57-4da8-908d-5b3388bfdf48/sign_up', to: 'etudiants/registrations#new'
   end
 
@@ -12,6 +13,7 @@ Rails.application.routes.draw do
     registrations: "tuteur_universitaires/registrations"
   }
   devise_scope :tuteur_universitaire do
+    get '/sign_in', to: 'devise/sessions#new'
     get 'f5506526-0a7d-40af-a39f-e456e5991564/sign_up', to: 'tuteur_universitaires/registrations#new'
   end
 
