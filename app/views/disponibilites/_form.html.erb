@@ -16,7 +16,6 @@
   <div class="row mb-3">
     <div class="col">
       <%= form.label :tuteur_universitaire, 'Tuteur Universitaire', class: 'form-label' %>
-      <%#= form.select :tuteur_universitaire_id, @tuteurs_universitaires.map { |tuteur| [tuteur.nom + " " + tuteur.prenom, tuteur.id] }, {}, { class: 'form-select' } %>
       <%= form.select :tuteur_universitaire_id, TuteurUniversitaire.all.map { |tuteur| [tuteur.nom + " " + tuteur.prenom, tuteur.id] }, {}, { class: 'form-select' } %>
     </div>
   </div>
@@ -25,6 +24,13 @@
     <div class="col">
       <%= form.label :promotion, 'Promotion', class: 'form-label' %>
       <%= form.select :promotion_id, Promotion.where(statut: "OUVERTE").map { |p| [p.annee, p.id] }, {}, { class: 'form-select' } %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <%= form.label :statut_reponse, 'Statut', class: 'form-label' %>
+      <%= form.select :statut_reponse, Disponibilite.statut_reponses.keys, {}, { class: 'form-select' } %>
     </div>
   </div>
 

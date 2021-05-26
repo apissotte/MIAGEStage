@@ -1,27 +1,23 @@
-<div class="container">
+<% if @promotion_ouvertes.any? %>
+  <div class="bandeauSuperieur d-flex justify-content-center">
+    <span class="mx-4 uppercase font-bold">Disponibilité des tuteurs</span>
+  </div>
+  <div class="d-flex justify-content-end mb-4 mr-4">
+    <%= link_to new_disponibilite_path(@disponibilite), remote: true, class: 'btn btn-outline-secondary',
+                data: { "bs-toggle": 'modal', "bs-target": '#newDispoModal' } do %>
+      <%= fa_icon "plus", class: "fa-lg me-1" %> Ajouter une disponibilité
+    <% end %>
+  </div>
 
-
-  <% if @promotion_ouvertes.any? %>
-    <h1>Disponibilité des tuteurs</h1>
-
-    <div class="row mb-3">
-      <div class="col text-right">
-        <%= link_to new_disponibilite_path(@disponibilite), remote: true, class: 'btn btn-primary me-2',
-                    data: { "bs-toggle": 'modal', "bs-target": '#newDispoModal' } do %>
-          <% fa_icon "plus", class: "fa-2x" %> Ajouter une disponibilité
-        <% end %>
-      </div>
-    </div>
-
-    <% @promotion_ouvertes.each do |prom| %>
-      <h3>Promotion <%= prom.annee %></h3>
-
-      <table class="table table-hover">
+  <% @promotion_ouvertes.each do |prom| %>
+    <h3 class="pl-4">Promotion <%= prom.annee %></h3>
+    <div class="card-body p-2">
+      <table class="table tableBleu">
         <thead>
         <tr>
-          <td class="w-25">Nom Prénom</td>
-          <td class="w-50">Nombre d'étudiant souhaité</td>
-          <td class="w-25">Statut</td>
+          <td>Nom Prénom</td>
+          <td>Nombre d'étudiant souhaité</td>
+          <td>Statut</td>
           <td></td>
         </tr>
         </thead>
@@ -35,41 +31,50 @@
               <%= d.nb_etudiants_souhaite %>
             </td>
             <td>
-              <%= d.statut_reponse %>
+              <% if d.statut_reponse == "OK" %>
+                <span class="badge bg-success">OK</span>
+              <% end %>
+              <% if d.statut_reponse == "ABANDON" %>
+                <span class="badge bg-danger">ABANDON</span>
+              <% end %>
+              <% if d.statut_reponse == "PAS_DE_REPONSE" %>
+                <span class="badge bg-warning">PAS DE RÉPONSE</span>
+              <% end %>
             </td>
-            <td>
+            <td class="text-right">
               <%= link_to disponibilite_url(d), method: :delete, class: 'btn btn-danger',
                           data: { confirm: "Etes-vous sûr de vouloir supprimer ce cette disponibilité ?" } do %>
-                <% fa_icon "trash", class: "fa-2x" %>
+                <%= fa_icon "trash", class: "fa-lg me-1" %>
               <% end %>
             </td>
           </tr>
         <% end %>
         </tbody>
       </table>
-    <% end %>
-
     </div>
+  <% end %>
 
-    <!-- New Modal -->
-    <div class="modal fade" id="newDispoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="newDispoModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="newDispoModalLabel">Ajouter une disponibilité</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body inner-import-new">
-          </div>
+  </div>
+
+  <!-- New Modal -->
+  <div class="modal fade" id="newDispoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="newDispoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newDispoModalLabel">Ajouter une disponibilité</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body inner-import-new">
         </div>
       </div>
     </div>
+  </div>
 
 
-  <% else %>
-    <div class="container">
-      <div class="alert alert-danger" role="alert">
-        Aucune promotion n'est ouverte. Impossible d'ajouter une disponibilité à un tuteur.
-      </div>
+<% else %>
+  <div class="container">
+    <div class="alert alert-danger" role="alert">
+      Aucune promotion n'est ouverte. Impossible d'ajouter une disponibilité à un tuteur.
     </div>
-  <% end %>
+  </div>
+<% end %>
