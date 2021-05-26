@@ -68,7 +68,7 @@ class EvaluationsController < ApplicationController
         pdf = ConsultationEval.new(@data)
         # pdf = Prawn::Document.new
         # pdf.text "Hello"
-        send_data pdf.render, filename: 'member.pdf', type: 'application/pdf', disposition: "inline"
+        send_data pdf.render, filename: 'grille.pdf', type: 'application/pdf', disposition: "inline"
       end
     end
   end
@@ -96,7 +96,7 @@ class EvaluationsController < ApplicationController
         pdf = ConsultationEval.new(@data)
         # pdf = Prawn::Document.new
         # pdf.text "Hello"
-        send_data pdf.render, filename: 'member.pdf', type: 'application/pdf', disposition: "inline"
+        send_data pdf.render, filename: 'grille.pdf', type: 'application/pdf', disposition: "inline"
       end
     end
   end

@@ -131,5 +131,20 @@ class TableauDeBordController < ApplicationController
     text += ']}'
 
     @data = JSON.parse(text)
+    sqlFormatGrille = "select contenu"+
+      " FROM ge_formats"+
+      " WHERE id = (select MAX(id) FROM ge_formats)"
+    formatGrille = ActiveRecord::Base.connection.execute(sqlFormatGrille)
+
+    @jsonGrille = JSON.parse(formatGrille[0]['contenu'])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = ConsultationEval.new(@jsonGrille)
+        # pdf = Prawn::Document.new
+        # pdf.text "Hello"
+        send_data pdf.render, filename: 'grille.pdf', type: 'application/pdf', disposition: "inline"
+      end
+    end
   end
 end
