@@ -61,15 +61,16 @@
                       </td>
                     <% elsif num == 1 %>
                       <td>
-                        <i class="fas fa-arrow-down" style="color:red"></i>
+                        <i style="color:red"><%= fa_icon "arrow-down", class: "fa-2x" %></i>
                       </td>
                     <% elsif num == 2 %>
                       <td>
-                        <i class="fas fa-arrow-up" style="color:green"></i>
+                        <i style="color:green"><%= fa_icon "arrow-up", class: "fa-2x" %></i>
                       </td>
                     <% elsif num == 3 %>
                       <td>
-                        <i class="fas fa-arrow-right" style="color:orange"></i>
+                        <i style="color:orange"><%= fa_icon "arrow-right", class: "fa-2x" %></i>
+
                       </td>
                     <%end %>
                   <% end %>

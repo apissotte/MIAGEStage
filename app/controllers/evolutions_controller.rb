@@ -25,7 +25,7 @@ class EvolutionsController < ApplicationController
         " AND stages.entreprise_id = entreprises.id " +
         " AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"
     else
-      sqlevol = "SELECT stages.id, sujet, type_stage, nom, prenom, mention, raison_sociale " +
+      sqlevol = "SELECT stages.id, sujet, raison_sociale, nom, prenom, mention, raison_sociale " +
         " FROM stages, formations, promotions, etudiants, entreprises " +
         " WHERE tuteur_universitaire_id == " + idTuteur.to_s +
         " AND stages.formation_id = formations.id" +
@@ -49,7 +49,8 @@ class EvolutionsController < ApplicationController
                     " from evaluations"+
                     " WHERE stage_id = " +evol['id'].to_s +
                     " AND auto_evaluation = 0"+
-                    " AND finale =0"
+                    " AND finale =0"+
+                    " AND rempli =1"
         grilleExe = ActiveRecord::Base.connection.execute(sqlgrille)
         grille = '{}'
         if grilleExe.present?
@@ -60,7 +61,8 @@ class EvolutionsController < ApplicationController
           " FROM evaluations"+
           " WHERE stage_id = " +evol['id'].to_s+
           " AND auto_evaluation = 0"+
-          " AND finale =1"
+          " AND finale =1"+
+          " AND rempli =1"
         grillefinalExe = ActiveRecord::Base.connection.execute(sqlgrillefinal)
         grillefinal = '{}'
         if grillefinalExe.present?
@@ -95,8 +97,23 @@ class EvolutionsController < ApplicationController
         i += 1
     end
     text += ']}'
-    @data = JSON.parse(text)
 
+    if @nbEntete == 0 then
+      sqlFormatGrille = "select contenu"+
+        " FROM ge_formats"+
+        " WHERE id = (select MAX(id) FROM ge_formats)"
+      formatGrille = ActiveRecord::Base.connection.execute(sqlFormatGrille)
+
+      jsonGrille = JSON.parse(formatGrille[0]['contenu'])
+      sections = jsonGrille['sections']
+
+      sections.each do |section|
+        @enteteTab.append(section['titre'])
+        @nbEntete += 1
+      end
+    end
+
+    @data = JSON.parse(text)
   end
 
 
