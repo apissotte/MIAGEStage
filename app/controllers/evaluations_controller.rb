@@ -137,8 +137,11 @@ class EvaluationsController < ApplicationController
         " FROM ge_formats"+
         " WHERE id = (select MAX(id) FROM ge_formats)"
       formatGrille = ActiveRecord::Base.connection.execute(sqlFormatGrille)
+      @jsonGrille = []
+      if formatGrille.present?
+        @jsonGrille = JSON.parse(formatGrille[0]['contenu'])
+      end
 
-      @jsonGrille = JSON.parse(formatGrille[0]['contenu'])
     end
 
 

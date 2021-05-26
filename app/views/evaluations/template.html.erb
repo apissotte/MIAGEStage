@@ -44,7 +44,7 @@ end %>
         </div>
       </div>
     </div>
-
+<% if @jsonGrille.length > 0 %>
 <% @jsonGrille['sections'].each_with_index { |valueData, indexData|%>
 
     <div class="section">
@@ -132,6 +132,6 @@ if @jsonGrille.has_key?('commentaire') then
 
   <% end
 end %>
-
+    <% end %>
   </div>
 </form>

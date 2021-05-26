@@ -8,24 +8,24 @@
   <select class="dropdown" name="promo" required onChange="window.location.href=this.value">
 
     <% if @filtre == 'tout' then %>
-    <option selected class="dropdown-item" value="./tableaudebord">Toutes les promotions</option>
+      <option selected class="dropdown-item" value="./tableaudebord">Toutes les promotions</option>
     <% else %>
-    <option class="dropdown-item" value="./tableaudebord">Toutes les promotions</option>
+      <option class="dropdown-item" value="./tableaudebord">Toutes les promotions</option>
     <% end %>
     <% if @filtre == 'L3' then %>
-    <option selected class="dropdown-item" value="./tableaudebord?filtre=L3">L3 MIAGE</option>
+      <option selected class="dropdown-item" value="./tableaudebord?filtre=L3">L3 MIAGE</option>
     <% else %>
-    <option class="dropdown-item" value="./tableaudebord?filtre=L3">L3 MIAGE</option>
+      <option class="dropdown-item" value="./tableaudebord?filtre=L3">L3 MIAGE</option>
     <% end %>
     <% if @filtre == 'M1' then %>
-    <option selected class="dropdown-item" value="./tableaudebord?filtre=M1">M1 MIAGE</option>
+      <option selected class="dropdown-item" value="./tableaudebord?filtre=M1">M1 MIAGE</option>
     <% else %>
-    <option class="dropdown-item" value="./tableaudebord?filtre=M1">M1 MIAGE</option>
+      <option class="dropdown-item" value="./tableaudebord?filtre=M1">M1 MIAGE</option>
     <% end %>
     <% if @filtre == 'M2' then %>
-    <option selected class="dropdown-item" value="./tableaudebord?filtre=M2">M2 MIAGE</option>
+      <option selected class="dropdown-item" value="./tableaudebord?filtre=M2">M2 MIAGE</option>
     <% else %>
-    <option class="dropdown-item" value="./tableaudebord?filtre=M2">M2 MIAGE</option>
+      <option class="dropdown-item" value="./tableaudebord?filtre=M2">M2 MIAGE</option>
     <% end %>
 
   </select>
@@ -77,58 +77,78 @@
 
               <td>
                 <div class="d-flex flex-column justify-content-between">
-                  <% if valueData['autoevaluation'] == 1 then %>
-                    <span class="completed">Completée</span>
-                    <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./evaluation/view/<%= valueData['idautoevaluation'] %>');">Consulter</button>
+                  <% if valueData['idautoevaluation'] == nil then %>
+                    <span class="not-completed">Indisponible</span>
                   <% else %>
-                    <span class="not-completed">Non Completée</span>
+                    <% if valueData['autoevaluation'] == 1 then %>
+                      <span class="completed">Completée</span>
+                      <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./evaluation/view/<%= valueData['idautoevaluation'] %>');">Consulter</button>
+                    <% else %>
+                      <span class="not-completed">Non Completée</span>
+                    <% end %>
                   <% end %>
                 </div>
               </td>
 
               <td>
                 <div class="d-flex flex-column justify-content-between">
-                  <% if valueData['grilleevaluation'] == 1 then %>
-                    <span class="completed">Completée</span>
-                    <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./evaluation/view/<%= valueData['idevaluation'] %>');">Consulter</button>
+                  <% if valueData['idevaluation'] == nil then %>
+                    <span class="not-completed">Indisponible</span>
                   <% else %>
-                    <span class="not-completed">Non Completée</span>
-                    <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./evaluation/edit/<%= valueData['idevaluation'] %>');">Remplir</button>
+                    <% if valueData['grilleevaluation'] == 1 then %>
+                      <span class="completed">Completée</span>
+                      <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./evaluation/view/<%= valueData['idevaluation'] %>');">Consulter</button>
+                    <% else %>
+                      <span class="not-completed">Non Completée</span>
+                      <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./evaluation/edit/<%= valueData['idevaluation'] %>');">Remplir</button>
+                    <% end %>
                   <% end %>
                 </div>
               </td>
 
               <td>
                 <div class="d-flex flex-column justify-content-between">
-                  <% if valueData['autoevaluationfinale'] == 1 then %>
-                    <span class="completed">Completée</span>
-                    <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./evaluation/view/<%= valueData['idautoevaluationfinale'] %>');">Consulter</button>
+                  <% if valueData['idautoevaluationfinale'] == nil then %>
+                    <span class="not-completed">Indisponible</span>
                   <% else %>
-                    <span class="not-completed">Non Completée</span>
+                    <% if valueData['autoevaluationfinale'] == 1 then %>
+                      <span class="completed">Completée</span>
+                      <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./evaluation/view/<%= valueData['idautoevaluationfinale'] %>');">Consulter</button>
+                    <% else %>
+                      <span class="not-completed">Non Completée</span>
+                    <% end %>
                   <% end %>
                 </div>
               </td>
 
               <td>
                 <div class="d-flex flex-column justify-content-between">
-                  <% if valueData['grilleevaluationfinale'] == 1 then %>
-                    <span class="completed">Completée</span>
-                    <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./evaluation/view/<%= valueData['idevaluationfinale'] %>');">Consulter</button>
+                  <% if valueData['idevaluationfinale'] == nil then %>
+                    <span class="not-completed">Indisponible</span>
                   <% else %>
-                    <span class="not-completed">Non Completée</span>
-                    <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./evaluation/edit/<%= valueData['idevaluationfinale'] %>');">Remplir</button>
+                    <% if valueData['grilleevaluationfinale'] == 1 then %>
+                      <span class="completed">Completée</span>
+                      <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./evaluation/view/<%= valueData['idevaluationfinale'] %>');">Consulter</button>
+                    <% else %>
+                      <span class="not-completed">Non Completée</span>
+                      <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./evaluation/edit/<%= valueData['idevaluationfinale'] %>');">Remplir</button>
+                    <% end %>
                   <% end %>
                 </div>
               </td>
 
               <td>
                 <div class="d-flex flex-column justify-content-between">
-                  <% if valueData['note'] == 1 then %>
-                    <span class="completed">Completée</span>
-                    <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./notation/view/<%= valueData['idnote'] %>');">Consulter</button>
+                  <% if valueData['idnote'] == nil then %>
+                    <span class="not-completed">Indisponible</span>
                   <% else %>
-                    <span class="not-completed">Non Completée</span>
-                    <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./notation/<%= valueData['idnote'] %>');">Remplir</button>
+                    <% if valueData['note'] == 1 then %>
+                      <span class="completed">Completée</span>
+                      <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./notation/view/<%= valueData['idnote'] %>');">Consulter</button>
+                    <% else %>
+                      <span class="not-completed">Non Completée</span>
+                      <button type="button" class="btn btn-round btn-sm px-3 mt-2" onclick="window.location.assign('./notation/<%= valueData['idnote'] %>');">Remplir</button>
+                    <% end %>
                   <% end %>
                 </div>
               </td>

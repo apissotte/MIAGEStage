@@ -40,25 +40,15 @@ Roles :
 
         <%= tableaudebord %>
         <%= evolution %>
-        <li class="nav-item">
-          <a class="nav-link">
-            <p> <%= link_to 'Edition profile', edit_tuteur_universitaire_registration_path, :class => 'navbar-link' %></p>
-          </a>
-        </li>
-
-        <%= link_to "Deconnexion", destroy_tuteur_universitaire_session_path, method: :delete, :class => 'navbar-link' %>
+        <p style="margin-right: 15px"> <%= link_to 'Edition profile', edit_tuteur_universitaire_registration_path, :class => 'navbar-link' %></p>
+        <p style="margin-right: 15px"><%= link_to "Deconnexion", destroy_tuteur_universitaire_session_path, method: :delete, :class => 'navbar-link' %></p>
       <% else %>
         <% if etudiant_signed_in? %>
           <%= evaluation %>
-          <li class="nav-item">
-            <a class="nav-link">
-              <p> <%= link_to 'Edition profile', edit_etudiant_registration_path, :class => 'navbar-link' %></p></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">
-              <p><%= link_to "Deconnexion", destroy_etudiant_session_path, method: :delete, :class => 'navbar-link' %></p>
-            </a>
-          </li>
+
+          <p style="margin-right: 15px"> <%= link_to 'Edition profile', edit_etudiant_registration_path, :class => 'navbar-link' %></p>
+          <p style="margin-right: 15px"><%= link_to "Deconnexion", destroy_etudiant_session_path, method: :delete, :class => 'navbar-link' %></p>
+
         <% else %>
           <% if responsable_stage_signed_in? %>
             <li class="nav-item">
@@ -82,6 +72,8 @@ Roles :
                 <option class="dropdown-item" value="/menurespstage">GRILLE D'EVALUATION</option>
               </select>
             </li>
+            <p style="margin-right: 15px; margin-left: 15px"> <%= link_to 'Edition profile', responsable_stage_registration_path, :class => 'navbar-link' %></p>
+            <p style="margin-right: 15px"><%= link_to "Deconnexion", responsable_stage_session_path, method: :delete, :class => 'navbar-link' %></p>
           <% end %>
         <% end %>
       <% end %>
