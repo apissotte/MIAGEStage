@@ -5,11 +5,11 @@ Rails.application.routes.draw do
 
   # Routes pour Devise
 
-  match '/tuteur_universitaires/sign_up' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
-  match '/tuteur_universitaires/sign_in' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
+  # match '/tuteur_universitaires/sign_up' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
+  # match '/tuteur_universitaires/sign_in' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
 
-  match '/responsable_stages/sign_up' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
-  match '/responsable_stages/sign_in' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
+  # match '/responsable_stages/sign_up' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
+  # match '/responsable_stages/sign_in' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
 
 
   devise_for :etudiants, controllers: {
