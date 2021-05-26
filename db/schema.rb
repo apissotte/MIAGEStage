@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_21_093500) do
+ActiveRecord::Schema.define(version: 2021_05_26_011223) do
 
   create_table "aides", force: :cascade do |t|
     t.boolean "cv_recu"
@@ -25,12 +25,14 @@ ActiveRecord::Schema.define(version: 2021_05_21_093500) do
   end
 
   create_table "disponibilites", force: :cascade do |t|
+    t.integer "nb_etudiants_souhaite"
     t.string "statut_reponse"
     t.integer "tuteur_universitaire_id"
+    t.integer "formation_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "nb_etudiants_souhaite", default: 0
     t.integer "promotion_id"
+    t.index ["formation_id"], name: "index_disponibilites_on_formation_id"
     t.index ["promotion_id"], name: "index_disponibilites_on_promotion_id"
     t.index ["tuteur_universitaire_id", "promotion_id"], name: "index_disponibilites_on_tuteur_universitaire_id_and_promotion_id", unique: true
     t.index ["tuteur_universitaire_id"], name: "index_disponibilites_on_tuteur_universitaire_id"
@@ -78,11 +80,13 @@ ActiveRecord::Schema.define(version: 2021_05_21_093500) do
 
   create_table "evaluations", force: :cascade do |t|
     t.text "contenu"
-    t.boolean "auto_evalution"
+    t.boolean "auto_evaluation"
     t.integer "stage_id"
     t.integer "ge_format_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "finale"
+    t.boolean "rempli"
     t.index ["ge_format_id"], name: "index_evaluations_on_ge_format_id"
     t.index ["stage_id"], name: "index_evaluations_on_stage_id"
   end
@@ -133,6 +137,20 @@ ActiveRecord::Schema.define(version: 2021_05_21_093500) do
     t.text "contenu"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "notation_formats", force: :cascade do |t|
+    t.string "contenu"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "notations", force: :cascade do |t|
+    t.string "note"
+    t.string "commentaire"
+    t.integer "stage_id"
+    t.integer "notation_format_id"
+    t.boolean "rempli"
   end
 
   create_table "offres", force: :cascade do |t|
@@ -228,10 +246,13 @@ ActiveRecord::Schema.define(version: 2021_05_21_093500) do
 
   add_foreign_key "aides", "etudiants"
   add_foreign_key "aides", "formations"
+  add_foreign_key "disponibilites", "promotions"
   add_foreign_key "evaluations", "ge_formats"
   add_foreign_key "evaluations", "stages"
   add_foreign_key "fiche_stages", "etudiants"
   add_foreign_key "formations", "promotions"
+  add_foreign_key "notations", "notation_formats"
+  add_foreign_key "notations", "stages"
   add_foreign_key "offres", "entreprises"
   add_foreign_key "stages", "entreprises"
   add_foreign_key "stages", "etudiants"

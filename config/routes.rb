@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/', to: 'pages#home'
   # Routes pour Devise
   #devise_for :tuteur_universitaires
   devise_for :etudiants, controllers: {
@@ -38,16 +39,8 @@ Rails.application.routes.draw do
     end
   end
 
-  # Contrôleur DisponibiliteController
-  resources :disponibilites
-
   # Contrôleur FormationsController
-  resources :formations do
-    member do
-      get 'next', to: 'formations#next'
-      post 'transfert', to: 'formations#transfert'
-    end
-  end
+  resources :formations
 
   # Contrôleur EntreprisesController
   resources :entreprises
@@ -60,4 +53,20 @@ Rails.application.routes.draw do
   # Contrôleur StaticController
   get '/static', to: 'static#index'
 
+  get '/evaluation', to: 'evaluations#evaluation'
+  get '/evaluation', to: 'evaluations#evaluation'
+  post '/evaluation/save', to: 'evaluations#save'
+  get '/evaluation/edit/(:id)', to: 'evaluations#editEvaluation'
+  get '/evaluation/view/(:id)', to: 'evaluations#viewEvaluation'
+  get '/tableaudebord', to: 'tableau_de_bord#tableauDeBord'
+  get '/menuetudiant', to: 'menu#menuEtudiant'
+  get '/menurespstage', to: 'menu#menuRespStage'
+  get '/menu', to: 'menu#redirection'
+  get '/notation', to: 'notations#notation'
+  get '/notation/view', to: 'notations#viewNotation'
+  get '/evolution', to: 'evolutions#evolution'
+  get '/statistiques', to: 'statistiques#statistiques'
+  get '/tableEtudiant', to: 'table_etudiant#tableEtudiant'
+  resources :ge_formats
+  resources :notation_formats
 end
