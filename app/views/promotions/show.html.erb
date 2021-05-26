@@ -1,5 +1,7 @@
+<div class="bandeauSuperieur d-flex justify-content-center">
+  <span class="mx-4 uppercase font-bold">Promotion <%= @promotion.annee %></span>
+</div>
 <div class="d-flex justify-content-between">
-  <h3>Promotion <%= @promotion.annee %></h3>
 
   <div>
     <% if @promotion.statut == 'OUVERTE' %>
@@ -31,7 +33,8 @@
   </div>
 </div>
 
-<table class="table">
+<div  class="card-body p-2">
+<table class="table tableBleu">
   <thead>
   <tr>
     <th scope="col">Mention</th>
@@ -72,6 +75,7 @@
   <% end %>
   </tbody>
 </table>
+</div>
 
 
 

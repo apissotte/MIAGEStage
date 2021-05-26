@@ -79,7 +79,21 @@ class EvaluationsController < ApplicationController
         res = ActiveRecord::Base.connection.execute(sql)
 
         if res.present?
-          @data = JSON.parse(res[0]["contenu"])
+            if res[0]['auto_evaluation'] == 1
+              if res[0]['finale'] == 1
+                @typeEval = "Visualisation de la fiche d'auto-évaluation finale"
+              else
+                @typeEval = "Visualisation de la fiche d'auto-évaluation"
+              end
+            else
+              if res[0]['finale'] == 1
+                @typeEval = "Visualisation de la fiche d'évaluation finale"
+              else
+                @typeEval = "Visualisation de la fiche d'évaluation"
+              end
+            end
+            @data = JSON.parse(res[0]["contenu"])
+
         end
       end
 
@@ -112,6 +126,19 @@ class EvaluationsController < ApplicationController
         if res[0]['rempli'] == 1
           redirect_to action: "viewEvaluation", id: params[:id]
         else
+          if res[0]['auto_evaluation'] == 1
+            if res[0]['finale'] == 1
+              @typeEval = "Remplissage de la fiche d'auto-évaluation finale"
+            else
+              @typeEval = "Remplissage de la fiche d'auto-évaluation"
+            end
+          else
+            if res[0]['finale'] == 1
+              @typeEval = "Remplissage de la fiche d'évaluation finale"
+            else
+              @typeEval = "Remplissage de la fiche d'évaluation"
+            end
+          end
           @data = JSON.parse(res[0]["contenu"])
         end
       end

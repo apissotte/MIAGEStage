@@ -42,34 +42,32 @@ class StatistiquesController < ApplicationController
       if nbTotalEtudiant.present?
         if nbTotalEtudiant[0]['nbEtudiant']>0
           if @filtre == 'tout' then
-            sqletudiant = "SELECT stages.id, nom, prenom,
-        COUNT (CASE WHEN auto_evaluation = 1 THEN (CASE WHEN finale = 0 THEN stages.id END)END) as EtuAutoEval,
-        COUNT (CASE WHEN auto_evaluation = 1 THEN (CASE WHEN finale = 1 THEN stages.id END)END) as EtuAutoEvalFinal,
-        COUNT (CASE WHEN auto_evaluation = 0 THEN (CASE WHEN finale = 0 THEN stages.id END)END) as EtuGrille,
-        COUNT (CASE WHEN auto_evaluation = 0 THEN (CASE WHEN finale = 1 THEN stages.id END)END) as EtuGrilleFinal
-        FROM stages, etudiants, evaluations, formations, promotions
-        WHERE stages.etudiant_id = etudiants.id
-        AND evaluations.stage_id = stages.id
-        AND stages.formation_id = formations.id
-        AND formations.promotion_id = promotions.id
-        AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)
-        AND rempli = 1
-        GROUP BY stages.id, nom, prenom	"
+            sqletudiant = "SELECT
+            COUNT (CASE WHEN auto_evaluation = 1 THEN (CASE WHEN finale = 0 THEN stages.id END)END) as EtuAutoEval,
+            COUNT (CASE WHEN auto_evaluation = 1 THEN (CASE WHEN finale = 1 THEN stages.id END)END) as EtuAutoEvalFinal,
+            COUNT (CASE WHEN auto_evaluation = 0 THEN (CASE WHEN finale = 0 THEN stages.id END)END) as EtuGrille,
+            COUNT (CASE WHEN auto_evaluation = 0 THEN (CASE WHEN finale = 1 THEN stages.id END)END) as EtuGrilleFinal
+            FROM stages, etudiants, evaluations, formations, promotions
+            WHERE stages.etudiant_id = etudiants.id
+            AND evaluations.stage_id = stages.id
+            AND stages.formation_id = formations.id
+            AND formations.promotion_id = promotions.id
+            AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)
+            AND rempli = 1"
           else
-            sqletudiant = "SELECT stages.id, nom, prenom,
-        COUNT (CASE WHEN auto_evaluation = 1 THEN (CASE WHEN finale = 0 THEN stages.id END)END) as EtuAutoEval,
-        COUNT (CASE WHEN auto_evaluation = 1 THEN (CASE WHEN finale = 1 THEN stages.id END)END) as EtuAutoEvalFinal,
-        COUNT (CASE WHEN auto_evaluation = 0 THEN (CASE WHEN finale = 0 THEN stages.id END)END) as EtuGrille,
-        COUNT (CASE WHEN auto_evaluation = 0 THEN (CASE WHEN finale = 1 THEN stages.id END)END) as EtuGrilleFinal
-        FROM stages, etudiants, evaluations, formations, promotions
-        WHERE stages.etudiant_id = etudiants.id
-        AND evaluations.stage_id = stages.id
-        AND stages.formation_id = formations.id
-        AND formations.promotion_id = promotions.id
-        AND rempli = 1
-        AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"+
-              " AND formations.mention = '" + @filtre + "'" +
-              " GROUP BY stages.id, nom, prenom	"
+            sqletudiant = "SELECT
+            COUNT (CASE WHEN auto_evaluation = 1 THEN (CASE WHEN finale = 0 THEN stages.id END)END) as EtuAutoEval,
+            COUNT (CASE WHEN auto_evaluation = 1 THEN (CASE WHEN finale = 1 THEN stages.id END)END) as EtuAutoEvalFinal,
+            COUNT (CASE WHEN auto_evaluation = 0 THEN (CASE WHEN finale = 0 THEN stages.id END)END) as EtuGrille,
+            COUNT (CASE WHEN auto_evaluation = 0 THEN (CASE WHEN finale = 1 THEN stages.id END)END) as EtuGrilleFinal
+            FROM stages, etudiants, evaluations, formations, promotions
+            WHERE stages.etudiant_id = etudiants.id
+            AND evaluations.stage_id = stages.id
+            AND stages.formation_id = formations.id
+            AND formations.promotion_id = promotions.id
+            AND rempli = 1
+            AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"+
+              " AND formations.mention = '" + @filtre + "'"
           end
           etudiant = ActiveRecord::Base.connection.execute(sqletudiant)
           if etudiant.present?

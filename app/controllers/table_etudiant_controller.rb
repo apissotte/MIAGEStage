@@ -35,7 +35,7 @@ class TableEtudiantController < ApplicationController
 
       if(auto != -1 || final != -1 )
         sqletudiants = "SELECT stages.id, etudiants.nom, etudiants.prenom,
-        etudiants.email_universitaire, etudiants.email_personnelle,
+        etudiants.email_universitaire, etudiants.email_personnel,
         tuteur_universitaires.nom as nomTuteur, tuteur_universitaires.prenom as prenomTuteur,
         tuteur_universitaires.email, mention, raison_sociale
         FROM stages, etudiants, formations, promotions, tuteur_universitaires, entreprises
@@ -68,7 +68,7 @@ class TableEtudiantController < ApplicationController
       else
         if (note != -1)
           sqletudiants = "SELECT stages.id, etudiants.nom, etudiants.prenom,
-        etudiants.email_universitaire, etudiants.email_personnelle,
+        etudiants.email_universitaire, etudiants.email_personnel,
         tuteur_universitaires.nom as nomTuteur, tuteur_universitaires.prenom as prenomTuteur,
         tuteur_universitaires.email, mention, raison_sociale
         FROM stages, etudiants, formations, promotions, tuteur_universitaires, entreprises
@@ -93,7 +93,7 @@ class TableEtudiantController < ApplicationController
           end
         else
           sqletudiants = "SELECT stages.id, etudiants.nom, etudiants.prenom,
-        etudiants.email_universitaire, etudiants.email_personnelle,
+        etudiants.email_universitaire, etudiants.email_personnel,
         tuteur_universitaires.nom as nomTuteur, tuteur_universitaires.prenom as prenomTuteur,
         tuteur_universitaires.email, mention, raison_sociale
         FROM stages, etudiants, formations, promotions, tuteur_universitaires, entreprises

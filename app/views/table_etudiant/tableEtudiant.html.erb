@@ -1,14 +1,14 @@
 <%= stylesheet_link_tag "tableauDeBord" %>
 
 <div class="bandeauSuperieur d-flex justify-content-center">
-  <span class="mx-4 uppercase font-bold">Tableau de bord</span>
+  <span class="mx-4 uppercase font-bold">Liste des étudiants</span>
 </div>
 
 <div class="card-body p-0">
   <% if @etudiants.present? then %>
 
       <div class="table-responsive p-2">
-        <table class="table table-bordered tableaudebord" id="dataTable" width="100%" cellspacing="0" cellpadding="0">
+        <table class="table table-bordered tableaudebord tableBleu" id="dataTable" width="100%" cellspacing="0" cellpadding="0">
           <thead>
           <tr>
             <th>Etudiant</th>
