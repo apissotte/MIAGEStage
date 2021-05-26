@@ -1,22 +1,39 @@
 Rails.application.routes.draw do
   get '/', to: 'pages#home'
+
+
+
   # Routes pour Devise
-  #devise_for :tuteur_universitaires
   devise_for :etudiants, controllers: {
     registrations: "etudiants/registrations"
   }
+
   devise_scope :etudiant do
     get '/sign_in', to: 'devise/sessions#new'
     get '4d6a8d14-ef57-4da8-908d-5b3388bfdf48/sign_up', to: 'etudiants/registrations#new'
   end
 
+
   devise_for :tuteur_universitaires, controllers: {
     registrations: "tuteur_universitaires/registrations"
   }
+
   devise_scope :tuteur_universitaire do
     get '/sign_in', to: 'devise/sessions#new'
     get 'f5506526-0a7d-40af-a39f-e456e5991564/sign_up', to: 'tuteur_universitaires/registrations#new'
   end
+
+
+  devise_for :responsable_stages, controllers: {
+    registrations: "responsable_stages/registrations"
+  }
+
+  devise_scope :tuteur_universitaire do
+    get '/sign_in', to: 'devise/sessions#new'
+    get '505cccad-922c-4251-bae6-55c5f91df05b/sign_up', to: 'responsable_stages/registrations#new'
+  end
+
+
 
   # Require a root to for devise
   root to: 'static#index'
