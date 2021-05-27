@@ -81,7 +81,7 @@ development:
 #
 production:
   <<: *default
-  database: MIAGEStage
+  database: mach0225_MIAGEStage
   username: mach0225_Z_USER_MIAGE_STAGE
   password: Initial01*!
   host: localhost
