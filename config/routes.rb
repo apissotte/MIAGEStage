@@ -80,7 +80,7 @@ Rails.application.routes.draw do
   get '/evaluation', to: 'evaluations#evaluation'
   get '/evaluationtemplate', to: 'evaluations#template'
   get '/notationtemplate', to: 'notations#template'
-  post '/evaluation/save', to: 'evaluations#save'
+  post '/evaluation/save/(:id)', to: 'evaluations#save'
   get '/evaluation/edit/(:id)', to: 'evaluations#editEvaluation'
   get '/evaluation/view/(:id)', to: 'evaluations#viewEvaluation'
   get '/tableaudebord', to: 'tableau_de_bord#tableauDeBord'

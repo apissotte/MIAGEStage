@@ -19,11 +19,11 @@ class NotationsController < ApplicationController
         " AND entreprises.id = stages.entreprise_id" +
         " AND formations.id = stages.formation_id"
 
-      notationData = JSON.parse ActiveRecord::Base.connection.execute(sqlevol)[0].to_s.gsub("=>", ":")
+      notationData = JSON.parse ActiveRecord::Base.connection.select_rows(sqlevol)[0].to_s.gsub("=>", ":")
 
-      @nomEtudiant = notationData["nom"].to_s + " " + notationData["prenom"].to_s
-      @promotionEtudiant = notationData["mention"].to_s + " " + notationData["libelle"].to_s
-      @entrepriseEtudiant = notationData["raison_sociale"].to_s
+      @nomEtudiant = notationData[0].to_s + " " + notationData[1].to_s
+      @promotionEtudiant = notationData[2].to_s + " " + notationData[3].to_s
+      @entrepriseEtudiant = notationData[4].to_s
 
       @note = notationDB.note
       @commentaire = notationDB.commentaire
@@ -49,11 +49,11 @@ class NotationsController < ApplicationController
         " AND entreprises.id = stages.entreprise_id" +
         " AND formations.id = stages.formation_id"
 
-      notationData = JSON.parse ActiveRecord::Base.connection.execute(sqlevol)[0].to_s.gsub("=>", ":")
+      notationData = JSON.parse ActiveRecord::Base.connection.select_rows(sqlevol)[0].to_s.gsub("=>", ":")
 
-      @nomEtudiant = notationData["nom"].to_s + " " + notationData["prenom"].to_s
-      @promotionEtudiant = notationData["mention"].to_s + " " + notationData["libelle"].to_s
-      @entrepriseEtudiant = notationData["raison_sociale"].to_s
+      @nomEtudiant = notationData[0].to_s + " " + notationData[1].to_s
+      @promotionEtudiant = notationData[2].to_s + " " + notationData[3].to_s
+      @entrepriseEtudiant = notationData[4].to_s
 
       @note = notationDB.note
       @commentaire = notationDB.commentaire
