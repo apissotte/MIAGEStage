@@ -68,7 +68,7 @@ class TableauDeBordController < ApplicationController
         end
       end
 
-      @stages = ActiveRecord::Base.connection.execute(sqlStage)
+      @stages = ActiveRecord::Base.connection.select_rows(sqlStage)
       i = 0
       text = '{"etudiants":['
 
@@ -85,95 +85,95 @@ class TableauDeBordController < ApplicationController
         COUNT(CASE WHEN auto_evaluation = 0 THEN (CASE WHEN finale = 0 THEN id END)END) as grille,
         COUNT(CASE WHEN auto_evaluation = 0 THEN (CASE WHEN finale = 1 THEN id END)END) as grilleFinal
         FROM evaluations
-        WHERE evaluations.stage_id = " + stage['id'].to_s + "
+        WHERE evaluations.stage_id = " + stage[0].to_s + "
         AND evaluations.rempli = 1"
-        eval = ActiveRecord::Base.connection.execute(sqleval)
+        eval = ActiveRecord::Base.connection.select_rows(sqleval)
 
         sqlautoeval =
           "SELECT id
         FROM evaluations
-        WHERE evaluations.stage_id = " + stage['id'].to_s + "
+        WHERE evaluations.stage_id = " + stage[0].to_s + "
         AND evaluations.auto_evaluation = 1
         AND evaluations.finale = 0"
-        resautoeval = ActiveRecord::Base.connection.execute(sqlautoeval)
+        resautoeval = ActiveRecord::Base.connection.select_rows(sqlautoeval)
         idautoeval = 'null'
         if resautoeval.count != 0
-          idautoeval = resautoeval[0]['id'].to_s
+          idautoeval = resautoeval[0][0].to_s
         end
 
         sqleval =
           "SELECT id
         FROM evaluations
-        WHERE evaluations.stage_id = " + stage['id'].to_s + "
+        WHERE evaluations.stage_id = " + stage[0].to_s + "
         AND evaluations.auto_evaluation = 0
         AND evaluations.finale = 0"
-        reseval = ActiveRecord::Base.connection.execute(sqleval)
+        reseval = ActiveRecord::Base.connection.select_rows(sqleval)
         ideval = 'null'
         if reseval.count != 0
-          ideval = reseval[0]['id'].to_s
+          ideval = reseval[0][0].to_s
         end
 
         sqlautoevalfinale =
           "SELECT id
         FROM evaluations
-        WHERE evaluations.stage_id = " + stage['id'].to_s + "
+        WHERE evaluations.stage_id = " + stage[0].to_s + "
         AND evaluations.auto_evaluation = 1
         AND evaluations.finale = 1"
-        resautoevalfinale = ActiveRecord::Base.connection.execute(sqlautoevalfinale)
+        resautoevalfinale = ActiveRecord::Base.connection.select_rows(sqlautoevalfinale)
         idautoevalfinale = 'null'
         if resautoevalfinale.count != 0
-          idautoevalfinale = resautoevalfinale[0]['id'].to_s
+          idautoevalfinale = resautoevalfinale[0][0].to_s
         end
 
         sqlevalfinale =
           "SELECT id
         FROM evaluations
-        WHERE evaluations.stage_id = " + stage['id'].to_s + "
+        WHERE evaluations.stage_id = " + stage[0].to_s + "
         AND evaluations.auto_evaluation = 0
         AND evaluations.finale = 1"
-        resevalfinale = ActiveRecord::Base.connection.execute(sqlevalfinale)
+        resevalfinale = ActiveRecord::Base.connection.select_rows(sqlevalfinale)
         idevalfinale = 'null'
         if resevalfinale.count != 0
-          idevalfinale = resevalfinale[0]['id'].to_s
+          idevalfinale = resevalfinale[0][0].to_s
         end
 
         sqlnote =
           "SELECT id
         FROM notations
-        WHERE notations.stage_id = " + stage['id'].to_s
-        resnote = ActiveRecord::Base.connection.execute(sqlnote)
+        WHERE notations.stage_id = " + stage[0].to_s
+        resnote = ActiveRecord::Base.connection.select_rows(sqlnote)
         idnote = 'null'
         if resnote.count != 0
-          idnote = resnote[0]['id'].to_s
+          idnote = resnote[0][0].to_s
         end
 
         if eval.count != 0
-          if (eval[0]['autoEval'].to_s != 0)
-            autoEval  = eval[0]['autoEval'].to_s
+          if (eval[0][0].to_s != 0)
+            autoEval  = eval[0][0].to_s
           end
-          if (eval[0]['autoEvalFinal'].to_s != 0)
-            autoEvalFinal = eval[0]['autoEvalFinal'].to_s
+          if (eval[0][1].to_s != 0)
+            autoEvalFinal = eval[0][1].to_s
           end
-          if (eval[0]['grille'].to_s != 0)
-            grille = eval[0]['grille'].to_s
+          if (eval[0][2].to_s != 0)
+            grille = eval[0][2].to_s
           end
-          if (eval[0]['grilleFinal'] != 0)
-            grilleFinal = eval[0]['grilleFinal'].to_s
+          if (eval[0][3] != 0)
+            grilleFinal = eval[0][3].to_s
           end
         end
 
-        sqlnotation = "SELECT COUNT(*) as note FROM notations WHERE notations.stage_id = " + stage['id'].to_s + " AND notations.rempli = 1"
-        notation = ActiveRecord::Base.connection.execute(sqlnotation)
+        sqlnotation = "SELECT COUNT(*) as note FROM notations WHERE notations.stage_id = " + stage[0].to_s + " AND notations.rempli = 1"
+        notation = ActiveRecord::Base.connection.select_rows(sqlnotation)
 
         if notation.count != 0
           notation = 'null'
         else
-          notation = notation[0]['note'].to_s
+          notation = notation[0][0].to_s
         end
         if(i>0)
           text += ','
         end
-        text += '{"nom": "'+stage['nom'] +' '+ stage['prenom'] +'","promotion": "'+stage['mention']+'", "entreprise": "'+stage['raison_sociale']+'", "type": "'+stage['type_stage']+'", "autoevaluation": '+autoEval+', "grilleevaluation": '+grille+', "autoevaluationfinale": '+autoEvalFinal+', "grilleevaluationfinale": '+grilleFinal+',  "note": '+notation+', "idautoevaluation": '+idautoeval+', "idevaluation": '+ideval+', "idautoevaluationfinale": '+idautoevalfinale+', "idevaluationfinale": '+idevalfinale+', "idnote": '+idnote+'}'
+        text += '{"nom": "'+stage[3] +' '+ stage[4] +'","promotion": "'+stage[5]+'", "entreprise": "'+stage[6]+'", "type": "'+stage[2]+'", "autoevaluation": '+autoEval+', "grilleevaluation": '+grille+', "autoevaluationfinale": '+autoEvalFinal+', "grilleevaluationfinale": '+grilleFinal+',  "note": '+notation+', "idautoevaluation": '+idautoeval+', "idevaluation": '+ideval+', "idautoevaluationfinale": '+idautoevalfinale+', "idevaluationfinale": '+idevalfinale+', "idnote": '+idnote+'}'
         i += 1
       end
       text += ']}'
