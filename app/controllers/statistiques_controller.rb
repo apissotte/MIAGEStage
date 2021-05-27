@@ -39,7 +39,7 @@ class StatistiquesController < ApplicationController
 
       nbTotalEtudiant = ActiveRecord::Base.connection.execute(sqlnbTotalEtudiant)
 
-      if nbTotalEtudiant.count == 0
+      if nbTotalEtudiant.count != 0
         if nbTotalEtudiant[0]['nbEtudiant']>0
           if @filtre == 'tout' then
             sqletudiant = "SELECT
@@ -70,7 +70,7 @@ class StatistiquesController < ApplicationController
               " AND formations.mention = '" + @filtre + "'"
           end
           etudiant = ActiveRecord::Base.connection.execute(sqletudiant)
-          if etudiant.count == 0
+          if etudiant.count != 0
             @pourcentageEtudiantAutoEvaluation = ((etudiant[0]['EtuAutoEval'].fdiv(nbTotalEtudiant[0]['nbEtudiant']))*100).round
             @pourcentageEtudiantAutoEvaluationFinal = ((etudiant[0]['EtuAutoEvalFinal'].fdiv(nbTotalEtudiant[0]['nbEtudiant']))*100).round
             @pourcentageEtudiantGrilleEvaluation = ((etudiant[0]['EtuGrille'].fdiv(nbTotalEtudiant[0]['nbEtudiant']))*100).round
@@ -99,7 +99,7 @@ class StatistiquesController < ApplicationController
           end
           etudiantNotation = ActiveRecord::Base.connection.execute(sqletudiantNotation)
           etudiantNotationNb = 0
-          if etudiantNotation.count == 0
+          if etudiantNotation.count != 0
             etudiantNotationNb = etudiantNotation[0]['nbEtudiant']
           end
           @pourcentageEtudiantNotation = (etudiantNotationNb/nbTotalEtudiant[0]['nbEtudiant'])*100
@@ -141,7 +141,7 @@ class StatistiquesController < ApplicationController
         end
         @data = []
         @legend = []
-        if dic.count == 0
+        if dic.count != 0
           dic.each do |key, value|
             @data.push([key, value]);
           end

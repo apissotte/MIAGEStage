@@ -97,7 +97,7 @@ class TableauDeBordController < ApplicationController
         AND evaluations.finale = 0"
         resautoeval = ActiveRecord::Base.connection.execute(sqlautoeval)
         idautoeval = 'null'
-        if resautoeval.count == 0
+        if resautoeval.count != 0
           idautoeval = resautoeval[0]['id'].to_s
         end
 
@@ -109,7 +109,7 @@ class TableauDeBordController < ApplicationController
         AND evaluations.finale = 0"
         reseval = ActiveRecord::Base.connection.execute(sqleval)
         ideval = 'null'
-        if reseval.count == 0
+        if reseval.count != 0
           ideval = reseval[0]['id'].to_s
         end
 
@@ -121,7 +121,7 @@ class TableauDeBordController < ApplicationController
         AND evaluations.finale = 1"
         resautoevalfinale = ActiveRecord::Base.connection.execute(sqlautoevalfinale)
         idautoevalfinale = 'null'
-        if resautoevalfinale.count == 0
+        if resautoevalfinale.count != 0
           idautoevalfinale = resautoevalfinale[0]['id'].to_s
         end
 
@@ -133,7 +133,7 @@ class TableauDeBordController < ApplicationController
         AND evaluations.finale = 1"
         resevalfinale = ActiveRecord::Base.connection.execute(sqlevalfinale)
         idevalfinale = 'null'
-        if resevalfinale.count == 0
+        if resevalfinale.count != 0
           idevalfinale = resevalfinale[0]['id'].to_s
         end
 
@@ -143,11 +143,11 @@ class TableauDeBordController < ApplicationController
         WHERE notations.stage_id = " + stage['id'].to_s
         resnote = ActiveRecord::Base.connection.execute(sqlnote)
         idnote = 'null'
-        if resnote.count == 0
+        if resnote.count != 0
           idnote = resnote[0]['id'].to_s
         end
 
-        if eval.count == 0
+        if eval.count != 0
           if (eval[0]['autoEval'].to_s != 0)
             autoEval  = eval[0]['autoEval'].to_s
           end
@@ -165,7 +165,7 @@ class TableauDeBordController < ApplicationController
         sqlnotation = "SELECT COUNT(*) as note FROM notations WHERE notations.stage_id = " + stage['id'].to_s + " AND notations.rempli = 1"
         notation = ActiveRecord::Base.connection.execute(sqlnotation)
 
-        if notation.count == 0
+        if notation.count != 0
           notation = 'null'
         else
           notation = notation[0]['note'].to_s

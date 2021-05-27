@@ -97,7 +97,7 @@ class NotationsController < ApplicationController
       formatNotation = ActiveRecord::Base.connection.execute(sqlFormatNotation)
 
       @jsonGrille = []
-      if formatNotation.count == 0
+      if formatNotation.count != 0
         @jsonGrille = JSON.parse(formatNotation[0]['contenu'])
       end
 
