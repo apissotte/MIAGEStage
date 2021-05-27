@@ -34,8 +34,8 @@ class CreateFicheStages < ActiveRecord::Migration[6.1]
 
       t.belongs_to :etudiant, foreign_key: true
     end
-    add_check_constraint :fiche_stages, 'statut IN ("BROUILLON", "VALIDEE","REFUSEE","EN_ATTENTE_DE_VALIDATION")'
-    add_check_constraint :fiche_stages, 'type_stage IN ("ALTERNANCE","STAGE")'
-    add_check_constraint :fiche_stages, 'mention IN ("L3","M1","M2")'
+    # add_check_constraint :fiche_stages, 'statut IN ("BROUILLON", "VALIDEE","REFUSEE","EN_ATTENTE_DE_VALIDATION")'
+    # add_check_constraint :fiche_stages, 'type_stage IN ("ALTERNANCE","STAGE")'
+    # add_check_constraint :fiche_stages, 'mention IN ("L3","M1","M2")'
   end
 end

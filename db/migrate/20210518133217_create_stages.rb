@@ -13,6 +13,6 @@ class CreateStages < ActiveRecord::Migration[6.1]
       t.belongs_to :tuteur_entreprise, foreign_key: true
       t.belongs_to :tuteur_universitaire, foreign_key: true
     end
-    add_check_constraint :stages, 'type_stage IN ("STAGE", "ALTERNANCE")'
+    # add_check_constraint :stages, 'type_stage IN ("STAGE", "ALTERNANCE")'
   end
 end

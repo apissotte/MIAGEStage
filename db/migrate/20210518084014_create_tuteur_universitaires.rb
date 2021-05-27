@@ -12,6 +12,6 @@ class CreateTuteurUniversitaires < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_check_constraint :tuteur_universitaires, 'statut_encadrant IN ("INDUSTRIE", "UNIVERSITAIRE")'
+    # add_check_constraint :tuteur_universitaires, 'statut_encadrant IN ("INDUSTRIE", "UNIVERSITAIRE")'
   end
 end

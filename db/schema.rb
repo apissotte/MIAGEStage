@@ -12,13 +12,16 @@
 
 ActiveRecord::Schema.define(version: 2021_05_26_192328) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "aides", force: :cascade do |t|
     t.boolean "cv_recu"
     t.boolean "lettre_recu"
     t.string "suivi"
     t.boolean "present_reunion"
-    t.integer "etudiant_id"
-    t.integer "formation_id"
+    t.bigint "etudiant_id"
+    t.bigint "formation_id"
     t.index ["etudiant_id", "formation_id"], name: "index_aides_on_etudiant_id_and_formation_id", unique: true
     t.index ["etudiant_id"], name: "index_aides_on_etudiant_id"
     t.index ["formation_id"], name: "index_aides_on_formation_id"
@@ -27,16 +30,15 @@ ActiveRecord::Schema.define(version: 2021_05_26_192328) do
   create_table "disponibilites", force: :cascade do |t|
     t.integer "nb_etudiants_souhaite"
     t.string "statut_reponse"
-    t.integer "tuteur_universitaire_id"
-    t.integer "formation_id"
+    t.bigint "tuteur_universitaire_id"
+    t.bigint "formation_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "promotion_id"
+    t.bigint "promotion_id"
     t.index ["formation_id"], name: "index_disponibilites_on_formation_id"
     t.index ["promotion_id"], name: "index_disponibilites_on_promotion_id"
-    t.index ["tuteur_universitaire_id", "promotion_id"], name: "index_disponibilites_on_tuteur_universitaire_id_and_promotion_id", unique: true
+    t.index ["tuteur_universitaire_id", "promotion_id"], name: "index_disponibilites_unique", unique: true
     t.index ["tuteur_universitaire_id"], name: "index_disponibilites_on_tuteur_universitaire_id"
-    t.check_constraint "statut_reponse IN (\"OK\",\"ABANDON\",\"PAS_DE_REPONSE\")"
   end
 
   create_table "entreprises", force: :cascade do |t|
@@ -68,12 +70,11 @@ ActiveRecord::Schema.define(version: 2021_05_26_192328) do
     t.index ["email_universitaire"], name: "index_etudiants_on_email_universitaire", unique: true
     t.index ["num_etudiant"], name: "index_etudiants_on_num_etudiant", unique: true
     t.index ["reset_password_token"], name: "index_etudiants_on_reset_password_token", unique: true
-    t.check_constraint "statut_arrivant_L3 IN (\"DSPEG\", \"MIAGE\")"
   end
 
   create_table "etudiants_formations", id: false, force: :cascade do |t|
-    t.integer "formation_id", null: false
-    t.integer "etudiant_id", null: false
+    t.bigint "formation_id", null: false
+    t.bigint "etudiant_id", null: false
     t.index ["etudiant_id"], name: "index_etudiants_formations_on_etudiant_id"
     t.index ["formation_id"], name: "index_etudiants_formations_on_formation_id"
   end
@@ -81,8 +82,8 @@ ActiveRecord::Schema.define(version: 2021_05_26_192328) do
   create_table "evaluations", force: :cascade do |t|
     t.text "contenu"
     t.boolean "auto_evaluation"
-    t.integer "stage_id"
-    t.integer "ge_format_id"
+    t.bigint "stage_id"
+    t.bigint "ge_format_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "finale"
@@ -117,11 +118,8 @@ ActiveRecord::Schema.define(version: 2021_05_26_192328) do
     t.string "commentaire_validation"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "etudiant_id"
+    t.bigint "etudiant_id"
     t.index ["etudiant_id"], name: "index_fiche_stages_on_etudiant_id"
-    t.check_constraint "mention IN (\"L3\",\"M1\",\"M2\")"
-    t.check_constraint "statut IN (\"BROUILLON\", \"VALIDEE\",\"REFUSEE\",\"EN_ATTENTE_DE_VALIDATION\")"
-    t.check_constraint "type_stage IN (\"ALTERNANCE\",\"STAGE\")"
   end
 
   create_table "formations", force: :cascade do |t|
@@ -129,7 +127,7 @@ ActiveRecord::Schema.define(version: 2021_05_26_192328) do
     t.string "libelle"
     t.string "email"
     t.string "code_ue"
-    t.integer "promotion_id"
+    t.bigint "promotion_id"
     t.index ["promotion_id"], name: "index_formations_on_promotion_id"
   end
 
@@ -161,15 +159,13 @@ ActiveRecord::Schema.define(version: 2021_05_26_192328) do
     t.binary "pdf"
     t.date "date_publication"
     t.string "sujet"
-    t.integer "entreprise_id"
+    t.bigint "entreprise_id"
     t.index ["entreprise_id"], name: "index_offres_on_entreprise_id"
-    t.check_constraint "mention IN (\"L3\",\"M1\", \"M2\")"
-    t.check_constraint "type_offre IN (\"STAGE\",\"ALTERNANCE\")"
   end
 
   create_table "offres_technologies", id: false, force: :cascade do |t|
-    t.integer "offre_id", null: false
-    t.integer "technology_id", null: false
+    t.bigint "offre_id", null: false
+    t.bigint "technology_id", null: false
     t.index ["offre_id"], name: "index_offres_technologies_on_offre_id"
     t.index ["technology_id"], name: "index_offres_technologies_on_technology_id"
   end
@@ -178,7 +174,6 @@ ActiveRecord::Schema.define(version: 2021_05_26_192328) do
     t.string "annee", limit: 4
     t.string "statut"
     t.index ["annee"], name: "index_promotions_on_annee", unique: true
-    t.check_constraint "statut IN (\"OUVERTE\", \"CLOTUREE\")"
   end
 
   create_table "responsable_stages", force: :cascade do |t|
@@ -201,17 +196,16 @@ ActiveRecord::Schema.define(version: 2021_05_26_192328) do
     t.float "gratification"
     t.string "type_stage"
     t.string "commentaire"
-    t.integer "etudiant_id"
-    t.integer "formation_id"
-    t.integer "entreprise_id"
-    t.integer "tuteur_entreprise_id"
-    t.integer "tuteur_universitaire_id"
+    t.bigint "etudiant_id"
+    t.bigint "formation_id"
+    t.bigint "entreprise_id"
+    t.bigint "tuteur_entreprise_id"
+    t.bigint "tuteur_universitaire_id"
     t.index ["entreprise_id"], name: "index_stages_on_entreprise_id"
     t.index ["etudiant_id"], name: "index_stages_on_etudiant_id"
     t.index ["formation_id"], name: "index_stages_on_formation_id"
     t.index ["tuteur_entreprise_id"], name: "index_stages_on_tuteur_entreprise_id"
     t.index ["tuteur_universitaire_id"], name: "index_stages_on_tuteur_universitaire_id"
-    t.check_constraint "type_stage IN (\"STAGE\", \"ALTERNANCE\")"
   end
 
   create_table "technologies", force: :cascade do |t|
@@ -224,7 +218,7 @@ ActiveRecord::Schema.define(version: 2021_05_26_192328) do
     t.string "prenom"
     t.string "email"
     t.string "telephone", limit: 10
-    t.integer "entreprise_id"
+    t.bigint "entreprise_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["entreprise_id"], name: "index_tuteur_entreprises_on_entreprise_id"
@@ -246,7 +240,6 @@ ActiveRecord::Schema.define(version: 2021_05_26_192328) do
     t.datetime "remember_created_at"
     t.index ["email"], name: "index_tuteur_universitaires_on_email", unique: true
     t.index ["reset_password_token"], name: "index_tuteur_universitaires_on_reset_password_token", unique: true
-    t.check_constraint "statut_encadrant IN (\"INDUSTRIE\", \"UNIVERSITAIRE\")"
   end
 
   create_table "visites", force: :cascade do |t|
@@ -254,7 +247,7 @@ ActiveRecord::Schema.define(version: 2021_05_26_192328) do
     t.string "statut"
     t.boolean "relance"
     t.string "commentaire"
-    t.integer "stage_id"
+    t.bigint "stage_id"
     t.index ["stage_id"], name: "index_visites_on_stage_id"
   end
 
