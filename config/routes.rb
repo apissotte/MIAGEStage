@@ -89,6 +89,7 @@ Rails.application.routes.draw do
   get '/menu', to: 'menu#redirection'
   get '/notation/(:id)', to: 'notations#notation'
   get '/notation/view/(:id)', to: 'notations#viewNotation'
+  post '/notation/save', to: 'notations#saveNotation'
   get '/evolution', to: 'evolutions#evolution'
   get '/statistiques', to: 'statistiques#statistiques'
   get '/tableEtudiant', to: 'table_etudiant#tableEtudiant'
