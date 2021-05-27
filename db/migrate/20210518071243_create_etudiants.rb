@@ -14,6 +14,6 @@ class CreateEtudiants < ActiveRecord::Migration[6.1]
     add_index :etudiants, :num_etudiant, unique: true
     add_index :etudiants, :email_personnel, unique: true
     add_index :etudiants, :email_universitaire, unique: true
-    add_check_constraint :etudiants, 'statut_arrivant_L3 IN ("DSPEG", "MIAGE")'
+    # add_check_constraint :etudiants, 'statut_arrivant_L3 IN ("DSPEG", "MIAGE")'
   end
 end

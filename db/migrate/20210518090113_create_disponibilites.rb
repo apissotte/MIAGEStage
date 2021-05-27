@@ -9,7 +9,7 @@ class CreateDisponibilites < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
-    add_check_constraint :disponibilites, 'statut_reponse IN ("OK","ABANDON","PAS_DE_REPONSE")'
+    # add_check_constraint :disponibilites, 'statut_reponse IN ("OK","ABANDON","PAS_DE_REPONSE")'
   end
 
 end
