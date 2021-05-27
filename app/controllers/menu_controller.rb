@@ -12,9 +12,9 @@ class MenuController < ApplicationController
       sqlStage =
         " SELECT id " +
           " FROM stages " +
-          " WHERE etudiant_id == " + idEtudiant.to_s
+          " WHERE etudiant_id = " + idEtudiant.to_s
       stage = ActiveRecord::Base.connection.execute(sqlStage)
-      if (!stage.present?)
+      if (!stage.count == 0)
         redirect_to("/")
       else
         idStage = stage[0]['id'].to_s

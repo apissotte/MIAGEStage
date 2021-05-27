@@ -83,7 +83,7 @@ class EvolutionsController < ApplicationController
           " AND rempli =1"
         grilleExe = ActiveRecord::Base.connection.execute(sqlgrille)
         grille = '{}'
-        if grilleExe.present?
+        if grilleExe.count == 0
           grille = grilleExe[0]['contenu']
         end
 
@@ -95,7 +95,7 @@ class EvolutionsController < ApplicationController
           " AND rempli =1"
         grillefinalExe = ActiveRecord::Base.connection.execute(sqlgrillefinal)
         grillefinal = '{}'
-        if grillefinalExe.present?
+        if grillefinalExe.count == 0
           grillefinal = grillefinalExe[0]['contenu'].to_s
         end
 
@@ -133,7 +133,7 @@ class EvolutionsController < ApplicationController
           " FROM ge_formats"+
           " WHERE id = (select MAX(id) FROM ge_formats)"
         formatGrille = ActiveRecord::Base.connection.execute(sqlFormatGrille)
-        if formatGrille.present?
+        if formatGrille.count == 0
           jsonGrille = JSON.parse(formatGrille[0]['contenu'])
           sections = jsonGrille['sections']
 
@@ -153,7 +153,7 @@ class EvolutionsController < ApplicationController
   def algoComparaisonJson (dataGrille, dataGrilleFinal)
     remplirEntete = false
     tabGrilleSelection = []
-    if dataGrille.present?
+    if dataGrille.count == 0
       if (@enteteTab.length == 0)
         remplirEntete = true
       end
@@ -168,7 +168,7 @@ class EvolutionsController < ApplicationController
       end
     end
     tabGrilleFinalSelection = []
-    if dataGrilleFinal.present?
+    if dataGrilleFinal.count == 0
       dataGrilleFinal['sections'].each_with_index do |valueData, indexData|
         valueData['competences'].each do |valueComp|
           tabGrilleFinalSelection.append([valueData['titre'], valueComp['selection']])
