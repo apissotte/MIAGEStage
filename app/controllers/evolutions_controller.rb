@@ -84,7 +84,7 @@ class EvolutionsController < ApplicationController
         grilleExe = ActiveRecord::Base.connection.select_rows(sqlgrille)
         grille = '{}'
         if grilleExe.count != 0
-          grille = grilleExe[0][1]
+          grille = grilleExe[0][0]
         end
 
         sqlgrillefinal = "select contenu"+
