@@ -37,10 +37,10 @@ class StatistiquesController < ApplicationController
 
       end
 
-      nbTotalEtudiant = ActiveRecord::Base.connection.execute(sqlnbTotalEtudiant)
+      nbTotalEtudiant = ActiveRecord::Base.connection.select_rows(sqlnbTotalEtudiant)
 
       if nbTotalEtudiant.count != 0
-        if nbTotalEtudiant[0]['nbEtudiant']>0
+        if nbTotalEtudiant[0][0]>0
           if @filtre == 'tout' then
             sqletudiant = "SELECT
             COUNT (CASE WHEN auto_evaluation = 1 THEN (CASE WHEN finale = 0 THEN stages.id END)END) as EtuAutoEval,
@@ -141,7 +141,7 @@ class StatistiquesController < ApplicationController
         end
         @data = []
         @legend = []
-        if dic.count != 0
+        if dic.present?
           dic.each do |key, value|
             @data.push([key, value]);
           end
