@@ -82,5 +82,8 @@ development:
 production:
   <<: *default
   database: MIAGEStage
-  username: myapp
-  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
+  username: mach0225_Z_USER_MIAGE_STAGE
+  password: Initial01*!
+  host: localhost
+  port: 5432
+  schema_search_path: myapp,sharedapp,public
