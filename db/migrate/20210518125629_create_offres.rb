@@ -12,7 +12,7 @@ class CreateOffres < ActiveRecord::Migration[6.1]
       t.belongs_to :entreprise, foreign_key: true
     end
 
-    add_check_constraint :offres, 'type_offre IN ("STAGE","ALTERNANCE")'
-    add_check_constraint :offres, 'mention IN ("L3","M1", "M2")'
+    # add_check_constraint :offres, 'type_offre IN ("STAGE","ALTERNANCE")'
+    # add_check_constraint :offres, 'mention IN ("L3","M1", "M2")'
   end
 end
