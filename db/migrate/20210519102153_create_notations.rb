@@ -3,7 +3,7 @@ class CreateNotations < ActiveRecord::Migration[6.1]
     create_table :notations do |t|
       t.string :note
       t.string :commentaire
-      t.integer :stage_id
+      t.bigint :stage_id
       t.integer :notation_format_id
     end
     add_foreign_key :notations, :stages
