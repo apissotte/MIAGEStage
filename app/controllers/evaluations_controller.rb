@@ -126,7 +126,7 @@ class EvaluationsController < ApplicationController
         if res[0][8] == 1
           redirect_to action: "viewEvaluation", id: params[:id]
         else
-          if res[0]['auto_evaluation'] == 1
+          if res[0][2] == 1
             if res[0][7] == 1
               @typeEval = "Remplissage de la fiche d'auto-évaluation finale"
             else
