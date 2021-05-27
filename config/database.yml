@@ -77,13 +77,13 @@ development:
 #     url: <%= ENV['MY_APP_DATABASE_URL'] %>
 #
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
-# for a full overview on how database connection configuration can be specified.
+# for a full overview on how data base connection configuration can be specified.
 #
 production:
-  <<: *default
+  adapter: mysql2
+  encoding: unicode
   database: mach0225_MIAGEStage
   username: mach0225_Z_USER_MIAGE_STAGE
   password: Initial01*!
   host: localhost
-  port: 5432
-  schema_search_path: myapp,sharedapp,public
+  port: 3306

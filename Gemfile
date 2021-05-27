@@ -66,3 +66,5 @@ gem 'devise'
 gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
 
 gem 'bigdecimal', '~>3.0.2'
+
+gem 'mysql2', '~>0.5.3'
