@@ -165,7 +165,7 @@ class TableauDeBordController < ApplicationController
         sqlnotation = "SELECT COUNT(*) as note FROM notations WHERE notations.stage_id = " + stage[0].to_s + " AND notations.rempli = 1"
         notation = ActiveRecord::Base.connection.select_rows(sqlnotation)
 
-        if notation.count != 0
+        if notation.count == 0
           notation = 'null'
         else
           notation = notation[0][0].to_s
