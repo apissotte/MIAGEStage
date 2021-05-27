@@ -76,3 +76,8 @@ select option:disabled {
     border-top-left-radius: 50px!important;
     border-top-right-radius: 50px!important;
 }
+i.fa.fa-xl {
+    font-size: 4rem;
+    color: green;
+    margin-right: 3rem;
+}

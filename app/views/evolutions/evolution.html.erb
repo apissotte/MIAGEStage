@@ -109,18 +109,18 @@
           <span class="uppercase font-bold text-darkgrey">Explication de l'algorithme </span>
         </div>
         <div style="color: #181552">
-        <span class="my-5">L'algorithme fonctionne en 2 temps :</span><br><br>
+          <span class="my-5">L'algorithme fonctionne en 2 temps :</span><br><br>
 
-        Premièrement, pour chaque Catégories (ex: savoir être, compétences transverses..), l'algorithme va comparer chaque ligne de compétence (ex: l'étudiant est autonome)
-        entre la première et la deuxième grille d'évaluation. Il attribuera une note en fonction de l'évolution de l'étudiant :
-        <br>- 1 si l'étudiant a progressé.
-        <br>- 0 si l'étudiant n'a pas progressé.
-        <br>- -1 si l'étudiant a régréssé.
+          Premièrement, pour chaque Catégories (ex: savoir être, compétences transverses..), l'algorithme va comparer chaque ligne de compétence (ex: l'étudiant est autonome)
+          entre la première et la deuxième grille d'évaluation. Il attribuera une note en fonction de l'évolution de l'étudiant :
+          <br>- 1 si l'étudiant a progressé.
+          <br>- 0 si l'étudiant n'a pas progressé.
+          <br>- -1 si l'étudiant a régréssé.
 
-        <br><br>Puis, pour chaque catégories, l'algorithme va faire une somme :
-        <br>- Si la somme est posistif, l'étudiant aura progressé. Une flèche verte sera affichée. <i class="fas fa-arrow-up" style="color:green"></i>
-        <br>- Si la somme est nulle, l'étudiant n'aura pas progressé. Une flèche orange sera affichée. <i class="fas fa-arrow-right" style="color:orange"></i>
-        <br>- Si la sommes est négatif, l'étudiant aura regréssé. Une flèche rouge sera affichée. <i class="fas fa-arrow-down" style="color:red"></i>
+          <br><br>Puis, pour chaque catégories, l'algorithme va faire une somme :
+          <br>- Si la somme est posistif, l'étudiant aura progressé. Une flèche verte sera affichée. <i style="color:green"><%= fa_icon "arrow-up", class: "fa-2x" %></i>
+          <br>- Si la somme est nulle, l'étudiant n'aura pas progressé. Une flèche orange sera affichée. <i style="color:orange"><%= fa_icon "arrow-right", class: "fa-2x" %></i>
+          <br>- Si la sommes est négatif, l'étudiant aura regréssé. Une flèche rouge sera affichée. <i style="color:red"><%= fa_icon "arrow-down", class: "fa-2x" %></i>
         </div>
       </div>
     </div>
