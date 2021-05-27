@@ -107,7 +107,7 @@ class TableEtudiantController < ApplicationController
         end
       end
 
-      @etudiants = ActiveRecord::Base.connection.execute(sqletudiants)
+      @etudiants = ActiveRecord::Base.connection.select_rows(sqletudiants)
 
     end
 
