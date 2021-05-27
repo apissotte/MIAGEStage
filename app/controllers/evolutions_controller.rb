@@ -65,7 +65,7 @@ class EvolutionsController < ApplicationController
             " AND promotions.id = (SELECT MAX(promotions.id) FROM promotions)"
         end
       end
-      evolutions = ActiveRecord::Base.connection.execute(sqlevol)
+      evolutions = ActiveRecord::Base.connection.select_rows(sqlevol)
       i=0
       text = '{"etudiants":['
       evolutions.each do |evol|
@@ -73,30 +73,30 @@ class EvolutionsController < ApplicationController
         if(i>0)
           text += ','
         end
-        text += '{"nom": "'+evol['nom']+ ' '+evol['prenom'] +'","promotion": "'+evol['mention']+'", "entreprise": "'+evol['raison_sociale']+'"'
+        text += '{"nom": "'+evol[3]+ ' '+evol[4] +'","promotion": "'+evol[5]+'", "entreprise": "'+evol[6]+'"'
 
         sqlgrille = "select contenu"+
           " from evaluations"+
-          " WHERE stage_id = " +evol['id'].to_s +
+          " WHERE stage_id = " +evol[0].to_s +
           " AND auto_evaluation = 0"+
           " AND finale =0"+
           " AND rempli =1"
-        grilleExe = ActiveRecord::Base.connection.execute(sqlgrille)
+        grilleExe = ActiveRecord::Base.connection.select_rows(sqlgrille)
         grille = '{}'
         if grilleExe.count != 0
-          grille = grilleExe[0]['contenu']
+          grille = grilleExe[0][1]
         end
 
         sqlgrillefinal = "select contenu"+
           " FROM evaluations"+
-          " WHERE stage_id = " +evol['id'].to_s+
+          " WHERE stage_id = " +evol[0].to_s+
           " AND auto_evaluation = 0"+
           " AND finale =1"+
           " AND rempli =1"
-        grillefinalExe = ActiveRecord::Base.connection.execute(sqlgrillefinal)
+        grillefinalExe = ActiveRecord::Base.connection.select_rows(sqlgrillefinal)
         grillefinal = '{}'
         if grillefinalExe.count != 0
-          grillefinal = grillefinalExe[0]['contenu'].to_s
+          grillefinal = grillefinalExe[0][0].to_s
         end
 
 
@@ -132,9 +132,9 @@ class EvolutionsController < ApplicationController
         sqlFormatGrille = "select contenu"+
           " FROM ge_formats"+
           " WHERE id = (select MAX(id) FROM ge_formats)"
-        formatGrille = ActiveRecord::Base.connection.execute(sqlFormatGrille)
+        formatGrille = ActiveRecord::Base.connection.select_rows(sqlFormatGrille)
         if formatGrille.count != 0
-          jsonGrille = JSON.parse(formatGrille[0]['contenu'])
+          jsonGrille = JSON.parse(formatGrille[0][0])
           sections = jsonGrille['sections']
 
           sections.each do |section|
