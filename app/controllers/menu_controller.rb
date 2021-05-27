@@ -28,7 +28,7 @@ class MenuController < ApplicationController
         FROM evaluations
         WHERE evaluations.stage_id = " + idStage + "
         AND evaluations.rempli = 1"
-        @eval = ActiveRecord::Base.connection.execute(sqleval)
+        @eval = ActiveRecord::Base.connection.select_rows(sqleval)
 
         sqlautoeval =
           "SELECT id
@@ -36,8 +36,8 @@ class MenuController < ApplicationController
         WHERE evaluations.stage_id = " + idStage + "
         AND evaluations.auto_evaluation = 1
         AND evaluations.finale = 0"
-        resautoeval = ActiveRecord::Base.connection.execute(sqlautoeval)
-        idautoeval = resautoeval[0]['id'].to_s
+        resautoeval = ActiveRecord::Base.connection.select_rows(sqlautoeval)
+        idautoeval = resautoeval[0][0].to_s
 
         sqleval =
           "SELECT id
@@ -45,8 +45,8 @@ class MenuController < ApplicationController
         WHERE evaluations.stage_id = " + idStage + "
         AND evaluations.auto_evaluation = 0
         AND evaluations.finale = 0"
-        reseval = ActiveRecord::Base.connection.execute(sqleval)
-        ideval = reseval[0]['id'].to_s
+        reseval = ActiveRecord::Base.connection.select_rows(sqleval)
+        ideval = reseval[0][0].to_s
 
         sqlautoevalfinale =
           "SELECT id
@@ -54,8 +54,8 @@ class MenuController < ApplicationController
         WHERE evaluations.stage_id = " + idStage + "
         AND evaluations.auto_evaluation = 1
         AND evaluations.finale = 1"
-        resautoevalfinale = ActiveRecord::Base.connection.execute(sqlautoevalfinale)
-        idautoevalfinale = resautoevalfinale[0]['id'].to_s
+        resautoevalfinale = ActiveRecord::Base.connection.select_rows(sqlautoevalfinale)
+        idautoevalfinale = resautoevalfinale[0][0].to_s
 
         sqlevalfinale =
           "SELECT id
@@ -63,8 +63,8 @@ class MenuController < ApplicationController
         WHERE evaluations.stage_id = " + idStage + "
         AND evaluations.auto_evaluation = 0
         AND evaluations.finale = 1"
-        resevalfinale = ActiveRecord::Base.connection.execute(sqlevalfinale)
-        idevalfinale = resevalfinale[0]['id'].to_s
+        resevalfinale = ActiveRecord::Base.connection.select_rows(sqlevalfinale)
+        idevalfinale = resevalfinale[0][0].to_s
 
         @idEvals = { "idAutoEval" => idautoeval, "idAutoEvalFinale" => idautoevalfinale, "idEval" => ideval, "idEvalFinale" => idevalfinale}
 

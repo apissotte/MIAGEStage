@@ -94,11 +94,11 @@ class NotationsController < ApplicationController
       sqlFormatNotation = "select contenu"+
         " FROM notation_formats"+
         " WHERE id = (select MAX(id) FROM notation_formats)"
-      formatNotation = ActiveRecord::Base.connection.execute(sqlFormatNotation)
+      formatNotation = ActiveRecord::Base.connection.select_rows(sqlFormatNotation)
 
       @jsonGrille = []
       if formatNotation.count != 0
-        @jsonGrille = JSON.parse(formatNotation[0]['contenu'])
+        @jsonGrille = JSON.parse(formatNotation[0][0])
       end
 
     end
