@@ -64,3 +64,5 @@ gem 'chartkick', '~> 4.0', '>= 4.0.4'
 gem 'devise'
 
 gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
+
+gem 'bigdecimal', '~>3.0.2'
