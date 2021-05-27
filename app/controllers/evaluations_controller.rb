@@ -9,7 +9,7 @@ class EvaluationsController < ApplicationController
     else
       # téléchargement d'une évaluation
       if params.has_key?('id') then
-        sql = "Select * from evaluations where id == " + params[:id]
+        sql = "Select * from evaluations where id = " + params[:id]
         res = ActiveRecord::Base.connection.select_rows(sql)
         # téléchargement du template
       else
@@ -62,7 +62,7 @@ class EvaluationsController < ApplicationController
         end
       end
 
-      sql = "Update evaluations set contenu = " +"'" + @text_json.to_json + "', rempli = 1 where id == " + params[:id]
+      sql = "Update evaluations set contenu = " +"'" + @text_json.to_json + "', rempli = 1 where id = " + params[:id]
       ActiveRecord::Base.connection.execute(sql)
       redirect_to action: "viewEvaluation", id: params[:id]
     end
@@ -75,7 +75,7 @@ class EvaluationsController < ApplicationController
       if params[:id] == nil
         redirect_to(evaluation_path)
       else
-        sql = "Select * from evaluations where id == " + params[:id]
+        sql = "Select * from evaluations where id = " + params[:id]
         res = ActiveRecord::Base.connection.select_rows(sql)
 
         if res.count != 0
@@ -118,7 +118,7 @@ class EvaluationsController < ApplicationController
         redirect_to(evaluation_path)
       else
         @url_save = "/evaluation/save/" + params[:id]
-        sql = "Select * from evaluations where id == " + params[:id]
+        sql = "Select * from evaluations where id = " + params[:id]
         res = ActiveRecord::Base.connection.select_rows(sql)
       end
 
