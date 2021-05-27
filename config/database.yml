@@ -81,7 +81,7 @@ development:
 #
 production:
   adapter: mysql2
-  encoding: unicode
+  encoding: utf8
   database: mach0225_MIAGEStage
   username: mach0225_Z_USER_MIAGE_STAGE
   password: Initial01*!
