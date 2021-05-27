@@ -10,15 +10,15 @@ class EvaluationsController < ApplicationController
       # téléchargement d'une évaluation
       if params.has_key?('id') then
         sql = "Select * from evaluations where id == " + params[:id]
-        res = ActiveRecord::Base.connection.execute(sql)
+        res = ActiveRecord::Base.connection.select_rows(sql)
         # téléchargement du template
       else
         sql = "Select * from ge_formats ORDER BY id DESC LIMIT 1 "
-        res = ActiveRecord::Base.connection.execute(sql)
+        res = ActiveRecord::Base.connection.select_rows(sql)
       end
 
       if res.count != 0
-        @data = JSON.parse(res[0]["contenu"])
+        @data = JSON.parse(res[0][1])
       else
         @data = ""
       end
@@ -41,9 +41,9 @@ class EvaluationsController < ApplicationController
       redirect_to("/")
     else
       sql = "Select * from ge_formats ORDER BY id DESC LIMIT 1 "
-      @res = ActiveRecord::Base.connection.execute(sql)
+      @res = ActiveRecord::Base.connection.select_rows(sql)
 
-      @text_json = JSON.parse(@res[0]["contenu"])
+      @text_json = JSON.parse(@res[0][1])
 
       params.delete('action')
       params.delete('controller')
@@ -76,23 +76,23 @@ class EvaluationsController < ApplicationController
         redirect_to(evaluation_path)
       else
         sql = "Select * from evaluations where id == " + params[:id]
-        res = ActiveRecord::Base.connection.execute(sql)
+        res = ActiveRecord::Base.connection.select_rows(sql)
 
         if res.count != 0
-            if res[0]['auto_evaluation'] == 1
-              if res[0]['finale'] == 1
+            if res[0][2] == 1
+              if res[0][7] == 1
                 @typeEval = "Visualisation de la fiche d'auto-évaluation finale"
               else
                 @typeEval = "Visualisation de la fiche d'auto-évaluation"
               end
             else
-              if res[0]['finale'] == 1
+              if res[0][7] == 1
                 @typeEval = "Visualisation de la fiche d'évaluation finale"
               else
                 @typeEval = "Visualisation de la fiche d'évaluation"
               end
             end
-            @data = JSON.parse(res[0]["contenu"])
+            @data = JSON.parse(res[0][1])
 
         end
       end
@@ -119,27 +119,27 @@ class EvaluationsController < ApplicationController
       else
         @url_save = "/evaluation/save/" + params[:id]
         sql = "Select * from evaluations where id == " + params[:id]
-        res = ActiveRecord::Base.connection.execute(sql)
+        res = ActiveRecord::Base.connection.select_rows(sql)
       end
 
       if res.count != 0
-        if res[0]['rempli'] == 1
+        if res[0][8] == 1
           redirect_to action: "viewEvaluation", id: params[:id]
         else
           if res[0]['auto_evaluation'] == 1
-            if res[0]['finale'] == 1
+            if res[0][7] == 1
               @typeEval = "Remplissage de la fiche d'auto-évaluation finale"
             else
               @typeEval = "Remplissage de la fiche d'auto-évaluation"
             end
           else
-            if res[0]['finale'] == 1
+            if res[0][7] == 1
               @typeEval = "Remplissage de la fiche d'évaluation finale"
             else
               @typeEval = "Remplissage de la fiche d'évaluation"
             end
           end
-          @data = JSON.parse(res[0]["contenu"])
+          @data = JSON.parse(res[0][1])
         end
       end
 
@@ -163,10 +163,10 @@ class EvaluationsController < ApplicationController
       sqlFormatGrille = "select contenu"+
         " FROM ge_formats"+
         " WHERE id = (select MAX(id) FROM ge_formats)"
-      formatGrille = ActiveRecord::Base.connection.execute(sqlFormatGrille)
+      formatGrille = ActiveRecord::Base.connection.select_rows(sqlFormatGrille)
       @jsonGrille = []
       if formatGrille.count != 0
-        @jsonGrille = JSON.parse(formatGrille[0]['contenu'])
+        @jsonGrille = JSON.parse(formatGrille[0][0])
       end
 
     end

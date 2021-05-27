@@ -149,16 +149,16 @@ class TableauDeBordController < ApplicationController
 
         if eval.count != 0
           if (eval[0][0].to_s != 0)
-            autoEval  = eval[0][0].to_s
+            autoEval  = eval[0][1].to_s
           end
           if (eval[0][1].to_s != 0)
-            autoEvalFinal = eval[0][1].to_s
+            autoEvalFinal = eval[0][2].to_s
           end
           if (eval[0][2].to_s != 0)
-            grille = eval[0][2].to_s
+            grille = eval[0][3].to_s
           end
           if (eval[0][3] != 0)
-            grilleFinal = eval[0][3].to_s
+            grilleFinal = eval[0][4].to_s
           end
         end
 
