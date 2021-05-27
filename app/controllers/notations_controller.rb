@@ -14,7 +14,7 @@ class NotationsController < ApplicationController
 
       sqlevol = "SELECT nom, prenom, mention, libelle, raison_sociale " +
         " FROM stages, etudiants, entreprises, formations " +
-        " WHERE stages.id == " + notationDB.stage_id.to_s +
+        " WHERE stages.id = " + notationDB.stage_id.to_s +
         " AND etudiants.id = stages.etudiant_id" +
         " AND entreprises.id = stages.entreprise_id" +
         " AND formations.id = stages.formation_id"
@@ -44,7 +44,7 @@ class NotationsController < ApplicationController
 
       sqlevol = "SELECT nom, prenom, mention, libelle, raison_sociale " +
         " FROM stages, etudiants, entreprises, formations " +
-        " WHERE stages.id == " + notationDB.stage_id.to_s +
+        " WHERE stages.id = " + notationDB.stage_id.to_s +
         " AND etudiants.id = stages.etudiant_id" +
         " AND entreprises.id = stages.entreprise_id" +
         " AND formations.id = stages.formation_id"
