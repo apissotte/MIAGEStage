@@ -6,7 +6,7 @@
 
 <div class="d-flex justify-content-center align-items-center drop py-3">
   <label class="mx-2" for="ver">Charger une version : </label>
-  <select class="dropdown btn-sm px-3 mx-2 btn-round" name="Editer une version" required id="ver">
+  <select class="dropdown btn-sm px-3 mx-2 btn-round" name="Editer une version" required id="ver" style="width: 20%;">
     <option value="" disabled selected>Version</option>
     <% for option in @ge_ids %>
       <option class="dropdown-item" <%= @ge_id.to_s == option.to_s ? "selected" : "" %>><%= option %></option>
