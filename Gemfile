@@ -70,3 +70,5 @@ gem 'bigdecimal', '~>3.0.2'
 gem 'mysql2', '~>0.5.3'
 
 gem 'listen', '~> 3.3'
+
+gem 'uglifier', '~> 4.2'
