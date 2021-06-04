@@ -2,6 +2,33 @@ Rails.application.routes.draw do
   get '/', to: 'pages#home'
 
 
+  # Ressources Promotions
+  #
+  # Contrôleur : PromotionsController (app/controllers/promotions_controller)
+  #
+  # Routes :
+  #
+  resources :promotions do
+    member do
+      put 'close', to: 'promotions#close'     # Route de clôture de promotion
+    end
+  end
+
+
+  # Ressources Formations
+  #
+  # Contrôleur : FormationsController (app/controllers/formations_controller)
+  #
+  # Routes :
+  #
+  resources :formations do
+    member do
+      get 'next', to: 'formations#next'             # Route pour sélectionner les étudiants à faire passer à la promotion suivante
+      post 'transfert', to: 'formations#transfert'  # Route réalisant le transfert des étudiants à la promotion suivante
+    end
+  end
+
+
   # Ressources Etudiants
   #
   # Contrôleur : EtudiantsController (app/controllers/etudiants_controller)
@@ -75,15 +102,9 @@ Rails.application.routes.draw do
   resources :fiche_stages, except: [:destroy, :edit]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
-  # Contrôleur PromotionsController
-  resources :promotions do
-    member do
-      put 'close', to: 'promotions#close'
-    end
-  end
 
-  # Contrôleur FormationsController
-  resources :formations
+
+
 
   # Contrôleur EntreprisesController
   resources :entreprises

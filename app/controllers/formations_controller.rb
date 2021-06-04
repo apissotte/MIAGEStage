@@ -45,6 +45,8 @@ class FormationsController < ApplicationController
         etudiant.transfert(next_formation)
       end
     end
+
+    redirect_to next_formation.promotion
   end
 
   def destroy
