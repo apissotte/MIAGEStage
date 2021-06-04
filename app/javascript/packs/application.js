@@ -6,7 +6,7 @@
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
-import "app/javascript/channels"
+// import "app/javascript/channels"
 
 import "bootstrap/dist/js/bootstrap"
 import "chartkick/chart.js"

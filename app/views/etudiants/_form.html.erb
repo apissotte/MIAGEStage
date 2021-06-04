@@ -3,7 +3,7 @@
     <%= f.label :formation_ids, 'Formation', class: 'form-label'%>
     <%= f.collection_select :formation_ids, Formation.order(:libelle), :id, :name_with_initial, {}, class: 'form-select' %>
 
-    <% etudiant.errors.full_messages_for(:num_etudiant).each do |message| %>
+    <% etudiant.errors.full_messages_for(:formation_ids).each do |message| %>
       <div class="text-danger" style="font-size: small"><%= message %></div>
     <% end %>
   </div>

@@ -1,6 +1,6 @@
 class PromotionsController < ApplicationController
   def index
-    @promotions = Promotion.all.order(annee: :desc)
+    @promotions = Promotion.order(annee: :desc)
   end
 
   def show
@@ -18,8 +18,6 @@ class PromotionsController < ApplicationController
 
     if @promotion.save
       redirect_to promotions_path
-    else
-      puts @promotion.errors.full_messages_for(:annee)
     end
   end
 

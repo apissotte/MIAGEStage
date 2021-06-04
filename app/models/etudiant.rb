@@ -1,4 +1,6 @@
 class Etudiant < ApplicationRecord
+  # attr_accessor :num_etudiant, :nom, :prenom, :email_universitaire, :email_personnel, :statut_arrivant_L3
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

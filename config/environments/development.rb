@@ -88,6 +88,6 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-  config.hosts << "dev.journee-entreprises.fr"
+  #   config.hosts << "dev.journee-entreprises.fr"
 
 end

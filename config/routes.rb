@@ -2,22 +2,41 @@ Rails.application.routes.draw do
   get '/', to: 'pages#home'
 
 
+  # Ressources Etudiants
+  #
+  # Contrôleur : EtudiantsController (app/controllers/etudiants_controller)
+  #
+  # Routes :
+  #       etudiants GET    /etudiants(.:format)                                    etudiants#index
+  #                 POST   /etudiants(.:format)                                    etudiants#create
+  #    new_etudiant GET    /etudiants/new(.:format)                                etudiants#new
+  #   edit_etudiant GET    /etudiants/:id/edit(.:format)                           etudiants#edit
+  #        etudiant GET    /etudiants/:id(.:format)                                etudiants#show
+  #                 PATCH  /etudiants/:id(.:format)                                etudiants#update
+  #                 PUT    /etudiants/:id(.:format)                                etudiants#update
+  #                 DELETE /etudiants/:id(.:format)                                etudiants#destroy
+  #
+  resources :etudiants
 
-  # Routes pour Devise
 
-  # match '/tuteur_universitaires/sign_up' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
-  # match '/tuteur_universitaires/sign_in' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
-
-  # match '/responsable_stages/sign_up' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
-  # match '/responsable_stages/sign_in' => redirect('/404.html'), via: [:get, :post, :patch, :delete]
-
-
-  devise_for :etudiants, controllers: {
-    registrations: "etudiants/registrations"
-  }
+  # Confiugration des routes pour Devise
+  #
+  # Documentation : https://github.com/heartcombo/devise#
+  #
+  # 3 modèles :
+  #   - Etudiants                     :etudiants
+  #   - Tuteurs universitaires        :tuteur_universitaires
+  #   - Responsable des stages        :responsable_stages
+  #
+  devise_for :etudiants,
+             path: '/auth',                                 # Préfixage des routes avec '/auth'
+             controllers: {
+               # Surcharge du contrôleur de registration de devise par le contrôleur Etudiants::RegistrationsController
+               registrations: "etudiants/registrations"
+             }
 
   devise_scope :etudiant do
-    # get '/sign_in', to: 'devise/sessions#new'
+    # Génération d'une route permettant l'inscription des étudiants
     get '4d6a8d14-ef57-4da8-908d-5b3388bfdf48/sign_up', to: 'etudiants/registrations#new', :as => 'guid_etudiant_sign_up'
   end
 
@@ -72,7 +91,7 @@ Rails.application.routes.draw do
   # Contrôleur TuteurUniversitaireController
   resources :tuteur_universitaires
 
-  resources :etudiants
+
 
   # Contrôleur StaticController
   get '/static', to: 'static#index'
